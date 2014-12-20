@@ -1,14 +1,33 @@
 'use strict';
 
-var mock = require('./mock');
+
 var mocks = require('./mocks/services');
 var asserts = require('./asserts/services');
-var services = mock.module('./services/index.js', mocks.modules, mocks.globals);
+var mockery = require('mockery');
+var path = require('path');
+var services;
+
+mockery.registerAllowables(['../src/services', 'path', 'fs', 'lodash', '../../config']);
+for (var mock in mocks.modules) {
+  mockery.registerMock(mock, mocks.modules[mock]);
+  mockery.registerAllowable(mock);
+}
+
+//console.log(mocks.modules['../../config']);
 
 var chai = require('chai');
 var expect = chai.expect;
 
 describe('Service Loader', function () {
+
+  beforeEach(function () {
+    mockery.enable();
+    services = require('../src/services');
+  });
+
+  afterEach(function () {
+    mockery.disable();
+  });
 
   describe('registry object', function () {
     it('should contain resolved service modules paths from default locations', function () {

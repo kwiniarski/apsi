@@ -2,10 +2,11 @@
 var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
+var config = require('../../config');
 var registry = {};
-var baseDir = __dirname;
+//var baseDir = __dirname;
 
-//console.log(baseDir);
+//console.log(config);
 
 function loadModulesFrom(dir) {
   try {
@@ -17,20 +18,20 @@ function loadModulesFrom(dir) {
     return _.zipObject(files, modules);
   }
   catch (err) {
-    throw 'Cannot read services from ' + dir;
+    throw 'Cannot read services from ' + dir + err;
   }
 }
 
 function loadBundledServices() {
-  return loadModulesFrom(baseDir);
+  return loadModulesFrom(config.APSI_SERVICES_DIR);
 }
 
 function loadUserServices() {
-  return loadModulesFrom(path.resolve(process.cwd(), 'api/services'));
+  return loadModulesFrom(path.join(config.BASE_DIR, 'api/services'));
 }
 
 function loadUserConfiguration() {
-  return loadModulesFrom(path.resolve(process.cwd(), 'config/services'));
+  return loadModulesFrom(path.join(config.BASE_DIR, 'config/services'));
 }
 
 //function requireService(name) {
@@ -66,7 +67,6 @@ Object.defineProperty(module.exports, '_config', {
 });
 
 //defineServices();
-
 var services = Object.keys(module.exports._registry);
 var serviceName, config, Service;
 

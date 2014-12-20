@@ -5,11 +5,11 @@
   "license": "MIT",
   "author": "Krzysztof Winiarski <winiarski.krzysztof@gmail.com>",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/kwiniarski/apsi"
+    "type": "git",
+    "url": "https://github.com/kwiniarski/apsi"
   },
   "engines": {
-    "node" : ">=0.10 <0.11"
+    "node": ">=0.10 <0.11"
   },
   "engineStrict": true,
   "keywords": [
@@ -20,6 +20,11 @@
   ],
   "scripts": {
     "test": "mocha -C -R min"
+  },
+  "config": {
+    "blanket": {
+      "pattern": "src"
+    }
   },
   "dependencies": {
     "body-parser": "~1.0.0",
@@ -35,9 +40,9 @@
     "winston-mongodb": "~0.5.2"
   },
   "devDependencies": {
+    "blanket": "^1.1.6",
     "chai": "^1.9.1",
     "mocha": "^1.20.1",
-    "sinon": "^1.10.2",
-    "sinon-chai": "^2.5.0"
+    "mockery": "^1.4.0"
   }
 }
