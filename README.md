@@ -1,4 +1,8 @@
-# apsi [![Build Status](https://travis-ci.org/kwiniarski/apsi.svg)](https://travis-ci.org/kwiniarski/apsi)
+[![Build Status](https://travis-ci.org/kwiniarski/apsi.svg)](https://travis-ci.org/kwiniarski/apsi)
+[![Test Coverage](https://codeclimate.com/github/kwiniarski/apsi/badges/coverage.svg)](https://codeclimate.com/github/kwiniarski/apsi)
+[![Code Climate](https://codeclimate.com/github/kwiniarski/apsi/badges/gpa.svg)](https://codeclimate.com/github/kwiniarski/apsi)
+
+# apsi
 
 Simple RESTful API framework for Node.js build on the top of Express.
 
