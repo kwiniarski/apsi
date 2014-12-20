@@ -6,6 +6,7 @@ addons:
   code_climate:
     repo_token: af286f54970b30afee4ad46c8d6b407c02cea276d4da9da6012f4f4a5da2db7c
 install:
+  - npm install
   - npm install -g mocha-lcov-reporter codeclimate-test-reporter
 after_success:
   - mocha -C -R mocha-lcov-reporter > lcov.info
