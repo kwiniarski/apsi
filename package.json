@@ -2,8 +2,16 @@
   "name": "apsi",
   "version": "0.0.1",
   "description": "Simple RESTful API framework for Node.js build on the top of Express",
+  "license": "MIT",
   "author": "Krzysztof Winiarski <winiarski.krzysztof@gmail.com>",
-  "repository": "https://github.com/kwiniarski/apsi",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/kwiniarski/apsi"
+  },
+  "engines": {
+    "node" : ">=0.10 <0.11"
+  },
+  "engineStrict": true,
   "keywords": [
     "restful",
     "api",
