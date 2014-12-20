@@ -10,7 +10,9 @@
     "framework",
     "express"
   ],
-  "scripts": {},
+  "scripts": {
+    "test": "mocha -C -R min"
+  },
   "dependencies": {
     "body-parser": "~1.0.0",
     "colors": "^1.0.3",

@@ -3,7 +3,7 @@
 var mock = require('./mock');
 var mocks = require('./mocks/services');
 var asserts = require('./asserts/services');
-var services = mock.module('node_modules/apsi/services/index.js', mocks.modules, mocks.globals);
+var services = mock.module('./services/index.js', mocks.modules, mocks.globals);
 
 var chai = require('chai');
 var expect = chai.expect;
