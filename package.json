@@ -19,7 +19,8 @@
     "express"
   ],
   "scripts": {
-    "test": "mocha -C -R min"
+    "test": "mocha -C -R min",
+    "covergae": "mocha -C -R mocha-lcov-reporter -r blanket > lcov.info"
   },
   "config": {
     "blanket": {

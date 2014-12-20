@@ -8,7 +8,7 @@ install:
   - npm install
   - npm install -g mocha-lcov-reporter codeclimate-test-reporter
 after_success:
-  - mocha -C -R mocha-lcov-reporter > lcov.info
+  - mocha -C -R mocha-lcov-reporter -r blanket > lcov.info
   - cat lcov.info | codeclimate
 
 
