@@ -1,4 +1,4 @@
-# APSI
+# apsi [![Build Status](https://travis-ci.org/kwiniarski/apsi.svg)](https://travis-ci.org/kwiniarski/apsi)
 
 Simple RESTful API framework for Node.js build on the top of Express.
 
