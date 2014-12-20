@@ -1,0 +1,14 @@
+nbproject
+node_modules
+bower_components
+dist
+.tmp
+.temp
+.build
+.deploy
+.test
+.brackets.json
+.idea
+.directory
+*.log
+Gruntfile.json
