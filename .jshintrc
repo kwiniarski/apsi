@@ -52,18 +52,12 @@
   "noyield": false,
 
   "mocha": true,
-  "browser": false,
-  "couch": false,
-  "devel": false,
-  "dojo": false,
-  "jquery": false,
-  "mootools": false,
   "node": true,
-  "nonstandard": false,
-  "phantom": false,
-  "prototypejs": false,
-  "rhino": false,
-  "worker": false,
-  "wsh": false,
-  "yui": false
+
+  "globals": {
+    "describe": true,
+    "xdescribe": true,
+    "it": true,
+    "xit": true
+  }
 }
