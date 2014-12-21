@@ -1,3 +1,7 @@
+//require('../asserts/services');
+
+
+
 var path = require('path');
 var noop = function () {};
 
@@ -8,7 +12,7 @@ var filesystemFixture = {
   },
   '/app/node_modules/app/services': {
     one: noop,
-    three: noop,
+    three: noop
   },
   '/app/config/services': {
     one: {},
@@ -32,7 +36,7 @@ var fsStub = {
       throw 'EFIXTURE_ENOENT: ' + pathStr;
     }
   }
-}
+};
 
 
 module.exports.Service = Service;
@@ -48,7 +52,9 @@ module.exports.modules = {
   '../../config': {
     BASE_DIR: path.normalize('/app'),
     APSI_DIR: path.normalize('/app/node_modules/app'),
-    APSI_SERVICES_DIR: path.normalize('/app/node_modules/app/services')
+    APSI_SERVICES_DIR: path.normalize('/app/node_modules/app/services'),
+    APPLICATION_SERVICES_DIR: path.normalize('/app/api/services'),
+    APPLICATION_SERVICES_CONFIG_DIR: path.normalize('/app/config/services')
   }
 };
 for (var pathName in module.exports.modules) {

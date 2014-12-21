@@ -3,7 +3,7 @@
 var program = require('commander');
 var express = require('express');
 var util = require('./lib/util');
-var services = require('./services');
+var services = require('./lib/services');
 var routes = require('./routes');
 var policies = require('./lib/policies');
 var dev = true;
@@ -29,7 +29,6 @@ function server() {
 
   var app = express();
   var log = apsi.services.log;
-//console.log(apsi.services);
 
   app.use(log.http);
   app.use(require('./lib/response'));
@@ -59,12 +58,12 @@ function server() {
   /* jshint unused: true */
 
 
-  var server = app.listen(program.port || 3000, function () {
+  var serverInstance = app.listen(program.port || 3000, function () {
 
-    var host = server.address().address;
-    var port = server.address().port;
+    var host = serverInstance.address().address;
+    var port = serverInstance.address().port;
 
-    console.log('Surf API listening at http://%s:%s', host, port);
+    log.info('API listening at http://%s:%s', host, port);
   });
 
   return app;
@@ -97,7 +96,7 @@ function migrate(method) {
     log.info('Migration complete.');
   });
 
-};
+}
 
 apsi.util = util;
 
@@ -105,7 +104,7 @@ apsi.services = {};
 
 apsi.config = function (_options) {
   options = _options;
-}
+};
 
 apsi.start = function () {
 
@@ -122,7 +121,7 @@ apsi.start = function () {
   }
 
   else {
-    return server ();
+    return server();
   }
 
 };
