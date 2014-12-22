@@ -10,13 +10,8 @@ var filesystemFixture = {
     one: noop,
     two: noop
   },
-  '/app/node_modules/app/services': {
-    one: noop,
-    three: noop
-  },
   '/app/config/services': {
-    one: {},
-    two: {}
+    one: {}
   }
 };
 for (var pathName in filesystemFixture) {
@@ -43,16 +38,12 @@ module.exports.Service = Service;
 
 module.exports.modules = {
   fs: fsStub,
-  //path: pathStub,
   '/app/api/services/one': Service,
   '/app/api/services/two': Service,
-  '/app/node_modules/app/services/three': Service,
   '/app/config/services/one': 1,
-  '/app/config/services/two': 2,
-  '../../config': {
+  '../config': {
     BASE_DIR: path.normalize('/app'),
     APSI_DIR: path.normalize('/app/node_modules/app'),
-    APSI_SERVICES_DIR: path.normalize('/app/node_modules/app/services'),
     APPLICATION_SERVICES_DIR: path.normalize('/app/api/services'),
     APPLICATION_SERVICES_CONFIG_DIR: path.normalize('/app/config/services')
   }
