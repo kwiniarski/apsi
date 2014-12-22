@@ -1,11 +1,25 @@
-//require('../asserts/services');
-
-
+'use strict';
 
 var path = require('path');
+var mockery = require('mockery');
 var noop = function () {};
 
-var filesystemFixture = {
+function normalizePaths(object) {
+
+  for (var key in object) {
+    if (object.hasOwnProperty(key)) {
+      object[path.normalize(key)] = object[key];
+    }
+  }
+
+  return object;
+}
+
+function Service(config) {
+  this.config = config;
+}
+
+var filesystemFixture = normalizePaths({
   '/app/api/services' : {
     one: noop,
     two: noop
@@ -13,15 +27,7 @@ var filesystemFixture = {
   '/app/config/services': {
     one: {}
   }
-};
-for (var pathName in filesystemFixture) {
-  filesystemFixture[path.normalize(pathName)] = filesystemFixture[pathName];
-}
-
-
-function Service(config) {
-  this.config = config;
-}
+});
 
 var fsStub = {
   readdirSync: function (pathStr) {
@@ -33,21 +39,33 @@ var fsStub = {
   }
 };
 
-
-module.exports.Service = Service;
-
-module.exports.modules = {
+var modules = normalizePaths({
   fs: fsStub,
   '/app/api/services/one': Service,
   '/app/api/services/two': Service,
   '/app/config/services/one': 1,
-  '../config': {
-    BASE_DIR: path.normalize('/app'),
-    APSI_DIR: path.normalize('/app/node_modules/app'),
-    APPLICATION_SERVICES_DIR: path.normalize('/app/api/services'),
-    APPLICATION_SERVICES_CONFIG_DIR: path.normalize('/app/config/services')
-  }
-};
-for (var pathName in module.exports.modules) {
-  module.exports.modules[path.normalize(pathName)] = module.exports.modules[pathName];
-}
+  '../config': require('../fixtures/config')
+});
+
+module.exports.Service = Service;
+
+module.exports.modules = modules;
+
+//module.exports.setup = function () {
+//  mockery.registerAllowables(['../lib/services', 'path', 'fs', 'lodash', '../config']);
+//
+//  for (var mockName in modules) {
+//    if (modules.hasOwnProperty(mockName)) {
+//      var mockObject = modules[mockName];
+//      mockery.registerMock(mockName, mockObject);
+//      mockery.registerAllowable(mockName);
+//    }
+//  }
+//
+//  mockery.enable();
+//};
+//
+//module.exports.reset = function () {
+//  mockery.disable();
+//  mockery.deregisterAll();
+//};

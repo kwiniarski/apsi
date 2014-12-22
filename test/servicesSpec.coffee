@@ -1,24 +1,16 @@
 'use strict';
 
-mocks     = require './mocks/services'
-mockery   = require 'mockery'
+mock      = require './mocks/services'
 services  = null
-
-mockery.registerAllowables ['../lib/services', 'path', 'fs', 'lodash', '../config']
-
-for own mockName, mockObject of mocks.modules
-  mockery.registerMock mockName, mockObject
-  mockery.registerAllowable mockName
 
 # jshint -W030
 describe 'Service provider', ->
 
   beforeEach ->
-    mockery.enable()
+    setup mock.modules
     services = require '../lib/services'
 
-  afterEach ->
-    mockery.disable()
+  afterEach reset
 
   describe 'registry object', ->
     it 'should contain resolved service modules paths from application directory', ->
@@ -31,8 +23,8 @@ describe 'Service provider', ->
 
   describe 'each service instance', ->
     it 'should be accesible as a property', ->
-      expect(services.one).to.be.instanceOf(mocks.Service)
-      expect(services.two).to.be.instanceOf(mocks.Service)
+      expect(services.one).to.be.instanceOf(mock.Service)
+      expect(services.two).to.be.instanceOf(mock.Service)
 
     it 'should be instantiated with the proper configuration object', ->
       expect(services.one.config).to.equal(1)
