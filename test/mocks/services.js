@@ -1,71 +1,35 @@
 'use strict';
 
 var path = require('path');
-var mockery = require('mockery');
-var noop = function () {};
-
-function normalizePaths(object) {
-
-  for (var key in object) {
-    if (object.hasOwnProperty(key)) {
-      object[path.normalize(key)] = object[key];
-    }
-  }
-
-  return object;
-}
+var sinon = require('sinon');
+var fs = require('fs');
+var fsStub = {};
 
 function Service(config) {
   this.config = config;
 }
 
-var filesystemFixture = normalizePaths({
-  '/app/api/services' : {
-    one: noop,
-    two: noop
-  },
-  '/app/config/services': {
-    one: {}
-  }
-});
+module.exports.install = function () {
+  fsStub = sinon.stub(fs, 'readdirSync');
+  fsStub.withArgs(path.normalize('/app/api/services')).returns(['one', 'two']);
+  fsStub.withArgs(path.normalize('/app/config/services')).returns(['one']);
+  fsStub.throws('EFIXTURE_ENOENT');
 
-var fsStub = {
-  readdirSync: function (pathStr) {
-    if (filesystemFixture[pathStr]) {
-      return Object.keys(filesystemFixture[pathStr]);
-    } else {
-      throw 'EFIXTURE_ENOENT: ' + pathStr;
-    }
-  }
+  return fsStub;
 };
 
-var modules = normalizePaths({
-  fs: fsStub,
+module.exports.uninstall = function () {
+  fsStub.restore();
+};
+
+module.exports.modules = {
+  fs: fs,
   '/app/api/services/one': Service,
   '/app/api/services/two': Service,
   '/app/config/services/one': 1,
   '../config': require('../fixtures/config')
-});
+};
 
 module.exports.Service = Service;
 
-module.exports.modules = modules;
 
-//module.exports.setup = function () {
-//  mockery.registerAllowables(['../lib/services', 'path', 'fs', 'lodash', '../config']);
-//
-//  for (var mockName in modules) {
-//    if (modules.hasOwnProperty(mockName)) {
-//      var mockObject = modules[mockName];
-//      mockery.registerMock(mockName, mockObject);
-//      mockery.registerAllowable(mockName);
-//    }
-//  }
-//
-//  mockery.enable();
-//};
-//
-//module.exports.reset = function () {
-//  mockery.disable();
-//  mockery.deregisterAll();
-//};

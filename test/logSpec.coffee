@@ -1,38 +1,39 @@
 'use strict';
 
 mock = require './mocks/log'
-mockery = require 'mockery'
-sinon = require 'sinon'
 winston = require 'winston'
-Console = winston.transports.Console
-File = winston.transports.File
-consoleTransport = null
-fileTransport = null
+spy = {}
 log = null
 
-describe 'Log', ->
-
-  beforeEach ->
-    setup mock.modules
-    consoleTransport = sinon.spy Console.prototype, 'log'
-    fileTransport = sinon.spy File.prototype, 'log'
-    log = require '../lib/log'
-    log.info 'test'
+describe 'Log provider', ->
 
   afterEach ->
-    consoleTransport.restore()
-    fileTransport.restore()
+    mock.uninstall()
     reset()
 
-  it 'should be an instance of Winston Logger', ->
-    expect(log).to.be.an.instanceOf winston.Logger
+  describe 'with empty configuration', ->
 
-  it 'should be configured only with Console transport if there is no configuration', ->
-    expect(consoleTransport).to.have.been.calledWith 'info', 'test'
-    #expect(fileTransport).to.have.not.been.called
+    beforeEach ->
+      setup mock.emptyConfig
+      spy = mock.install()
+      log = require '../lib/log'
+      log.info 'test'
 
-  it.skip 'should be accessable before services or routes are initialized', ->
-  it.skip 'should accept transport from configuration file', ->
+    it 'should be an instance of Winston Logger', ->
+      expect(log).to.be.an.instanceOf winston.Logger
 
+    it 'should be configured with Console transport', ->
+      expect(spy.Console).to.have.been.calledWith 'info', 'test'
+      expect(spy.File).to.have.not.been.called
 
+  describe 'when configured with Config and File transports', ->
 
+    beforeEach ->
+      setup mock.config
+      spy = mock.install()
+      log = require '../lib/log'
+      log.info 'test'
+
+    it 'should send message using both transports', ->
+      expect(spy.Console).to.have.been.calledWith 'info', 'test'
+      expect(spy.File).to.have.been.calledWith 'info', 'test'

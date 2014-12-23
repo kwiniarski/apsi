@@ -8,9 +8,12 @@ describe 'Service provider', ->
 
   beforeEach ->
     setup mock.modules
+    mock.install();
     services = require '../lib/services'
 
-  afterEach reset
+  afterEach ->
+    mock.uninstall();
+    reset()
 
   describe 'registry object', ->
     it 'should contain resolved service modules paths from application directory', ->

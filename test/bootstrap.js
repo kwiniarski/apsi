@@ -24,21 +24,34 @@ global.AssertionError = chai.AssertionError;
 global.Assertion = chai.Assertion;
 global.assert = chai.assert;
 
+//global.normalizePaths = function (object) {
+//
+//  for (var key in object) {
+//    if (object.hasOwnProperty(key)) {
+//      object[path.normalize(key)] = object[key];
+//    }
+//  }
+//
+//  return object;
+//};
 
-global.setup = function (modules, cleanCache) {
+global.setup = function (modules) {
   mockery.enable({
     warnOnUnregistered: false,
-    useCleanCache: cleanCache || false
+    warnOnReplace: false,
+    useCleanCache: true
   });
 
   for (var mockName in modules) {
     if (modules.hasOwnProperty(mockName)) {
       mockery.registerMock(mockName, modules[mockName]);
+      mockery.registerMock(path.normalize(mockName), modules[mockName]);
     }
   }
 };
 
 global.reset = function () {
-  mockery.disable();
   mockery.deregisterAll();
+  mockery.resetCache();
+  mockery.disable();
 };

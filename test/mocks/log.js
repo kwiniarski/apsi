@@ -1,31 +1,39 @@
 'use strict';
 
 var path = require('path');
-var mockery = require('mockery');
-var noop = function () {};
+var winston = require('winston');
+var sinon = require('sinon');
+var transportSpies = {};
 
-function normalizePaths(object) {
-
-  for (var key in object) {
-    if (object.hasOwnProperty(key)) {
-      object[path.normalize(key)] = object[key];
-    }
+module.exports.install = function () {
+  var transportSpies = {};
+  for (var transport in winston.transports) {
+    transportSpies[transport] = sinon.spy(winston.transports[transport].prototype, 'log');
   }
 
-  return object;
+  return transportSpies;
+};
+
+module.exports.uninstall = function () {
+  for (var transport in transportSpies) {
+    transportSpies[transport].reset();
+  }
 }
 
-
-
-var modules = normalizePaths({
+module.exports.emptyConfig = {
+  'winston': winston,
   '../config': require('../fixtures/config'),
-  '/app/config/log-empty': {},
+  '/app/config/log': {}
+};
+
+module.exports.config = {
+  'winston': winston,
+  '../config': require('../fixtures/config'),
   '/app/config/log': {
+    Console: true,
     File: {
       stream: process.stdout
     }
   }
-});
-
-module.exports.modules = modules;
+};
 
