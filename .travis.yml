@@ -15,7 +15,7 @@ before_script:
   - "mysql -e 'create database test_surf;'"
   - npm run-script instrument
 
-#after_success:
-#  - npm run-script codeclimate
+after_success:
+  - cat lcov.info | ./node_modules/.bin/codeclimate
 
 
