@@ -30,6 +30,7 @@ glob.sync('./{lib,middleware}/**/*.js').forEach(function (file) {
       var coveredFile = path.resolve(process.cwd(), COVERAGE_DIR, file);
       fs.ensureFileSync(coveredFile);
       fs.writeFileSync(coveredFile, instrumented);
+      console.log('Instrumented file: %s', coveredFile);
     });
   } catch (err) {
     console.log(file, err.message);
