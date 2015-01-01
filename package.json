@@ -21,7 +21,7 @@
   "scripts": {
     "instrument": "node ./test/instrument",
     "coverage": "mocha -C -R html-cov ./test-coverage/test > ./test-coverage/report.html",
-    "test": "mocha -C -R mocha-lcov-reporter ./test-coverage/test > lcov.info",
+    "test": "mocha -C -R min ./test-coverage/test",
     "codeclimate": "cat lcov.info | codeclimate"
   },
   "dependencies": {
