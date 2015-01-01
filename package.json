@@ -25,6 +25,7 @@
     "codeclimate": "cat lcov.info | ./node_modules/.bin/codeclimate"
   },
   "dependencies": {
+    "bluebird": "^2.5.3",
     "body-parser": "~1.10.0",
     "colors": "^1.0.3",
     "commander": "^2.6.0",

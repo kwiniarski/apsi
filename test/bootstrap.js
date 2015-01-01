@@ -18,8 +18,8 @@ utils.addMethod(chai.Assertion.prototype, 'readOnly', function (property) {
 
 chai.use(require('sinon-chai'));
 chai.use(require('chai-http'));
+chai.request.addPromises(require('bluebird').Promise);
 chai.config.includeStack = true;
-chai.request.Test.prototype.then = false;
 
 global.expect = chai.expect;
 global.AssertionError = chai.AssertionError;
