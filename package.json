@@ -21,7 +21,7 @@
   "scripts": {
     "instrument": "node ./test/instrument",
     "coverage": "mocha -C -R html-cov ./test-coverage/test > ./test-coverage/report.html",
-    "test": "mocha",
+    "test": "mocha -R mocha-lcov-reporter ./test-coverage/test",
     "codeclimate": "cat lcov.info | codeclimate"
   },
   "dependencies": {
@@ -44,6 +44,7 @@
     "chai-http": "^1.0.0",
     "coffee-script": "^1.8.0",
     "mocha": "^1.21.5",
+    "mocha-lcov-reporter": "0.0.1",
     "mockery": "^1.4.0",
     "mysql": "~2.5.0",
     "sinon": "^1.12.2",
