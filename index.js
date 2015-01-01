@@ -4,7 +4,7 @@ var program = require('commander');
 var express = require('express');
 var util = require('./lib/util');
 var services = require('./lib/services');
-var routes = require('./routes');
+var routes = require('./lib/routes');
 var policies = require('./lib/policies');
 var dev = true;
 
@@ -18,22 +18,22 @@ program.version('0.0.1')
 
 
 var options = {};
-var apsi = {};
+var surf = {};
 
 function bootstrap() {
-  apsi.services = services.load(options.baseDir + '/config');
-  policies.register(apsi.services);
+  surf.services = services.load(options.baseDir + '/config');
+  policies.register(surf.services);
 }
 
 function server() {
 
   var app = express();
-  var log = apsi.services.log;
+  var log = surf.services.log;
 
   app.use(log.http);
   app.use(require('./lib/response'));
   app.use(require('body-parser').json());
-  app.use(policies.passport.authenticate('apsi-client', {session: false}));
+  app.use(policies.passport.authenticate('surf-client', {session: false}));
 
   app.use(routes(options.baseDir));
 
@@ -71,8 +71,8 @@ function server() {
 
 function synchronize() {
 
-  var log = apsi.services.log;
-  var db = apsi.services.db;
+  var log = surf.services.log;
+  var db = surf.services.db;
 
   return db.sequelize.sync({
     log: log.debug,
@@ -85,8 +85,8 @@ function synchronize() {
 }
 
 function migrate(method) {
-  var log = apsi.services.log;
-  var migrator = apsi.services.db.sequelize.getMigrator({
+  var log = surf.services.log;
+  var migrator = surf.services.db.sequelize.getMigrator({
     path: options.baseDir + '/migrations'
   });
 
@@ -98,15 +98,15 @@ function migrate(method) {
 
 }
 
-apsi.util = util;
+surf.util = util;
 
-apsi.services = {};
+surf.services = {};
 
-apsi.config = function (_options) {
+surf.config = function (_options) {
   options = _options;
 };
 
-apsi.start = function () {
+surf.start = function () {
 
   bootstrap();
 
@@ -126,8 +126,8 @@ apsi.start = function () {
 
 };
 
-apsi.migrate = function (method) {
-  var migrator = apsi.services.db.sequelize.getMigrator({
+surf.migrate = function (method) {
+  var migrator = surf.services.db.sequelize.getMigrator({
     path: options.baseDir + '/migrations'
   });
 
@@ -143,5 +143,5 @@ apsi.migrate = function (method) {
 
 
 
-module.exports = apsi;
+module.exports = surf;
 

@@ -17,41 +17,23 @@ utils.addMethod(chai.Assertion.prototype, 'readOnly', function (property) {
 /* jshint +W030 */
 
 chai.use(require('sinon-chai'));
+chai.use(require('chai-http'));
 chai.config.includeStack = true;
+chai.request.Test.prototype.then = false;
 
 global.expect = chai.expect;
 global.AssertionError = chai.AssertionError;
 global.Assertion = chai.Assertion;
 global.assert = chai.assert;
+global.request = chai.request;
+global.mockery = mockery;
 
-//global.normalizePaths = function (object) {
-//
-//  for (var key in object) {
-//    if (object.hasOwnProperty(key)) {
-//      object[path.normalize(key)] = object[key];
-//    }
-//  }
-//
-//  return object;
-//};
-
-global.setup = function (modules) {
-  mockery.enable({
-    warnOnUnregistered: false,
-    warnOnReplace: false,
-    useCleanCache: true
-  });
-
-  for (var mockName in modules) {
-    if (modules.hasOwnProperty(mockName)) {
-      mockery.registerMock(mockName, modules[mockName]);
-      mockery.registerMock(path.normalize(mockName), modules[mockName]);
-    }
-  }
+global.registerMock = function (pathStr, mockObj) {
+  mockery.registerMock(pathStr, mockObj);
+  mockery.registerMock(path.normalize(pathStr), mockObj);
+};
+global.deregisterMock = function (pathStr) {
+  mockery.deregisterMock(pathStr);
+  mockery.deregisterMock(path.normalize(pathStr));
 };
 
-global.reset = function () {
-  mockery.deregisterAll();
-  mockery.resetCache();
-  mockery.disable();
-};

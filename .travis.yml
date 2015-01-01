@@ -1,14 +1,18 @@
 language: node_js
+
 node_js:
   - "0.10"
+
 addons:
   code_climate:
     repo_token: af286f54970b30afee4ad46c8d6b407c02cea276d4da9da6012f4f4a5da2db7c
-install:
-  - npm install
-  - npm install -g coffee-script mocha-lcov-reporter codeclimate-test-reporter
+
+before_script:
+  - "mysql -e 'create database test_apsi;'"
+
 after_success:
-  - mocha -C -R mocha-lcov-reporter -r blanket > lcov.info
-  - cat lcov.info | codeclimate
+  - npm run-script instrument
+  - npm run-script travis
+  - npm run-script codeclimate
 
 

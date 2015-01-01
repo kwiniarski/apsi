@@ -1,12 +1,12 @@
 {
-  "name": "apsi",
-  "version": "0.0.1",
+  "name": "surfjs",
+  "version": "0.0.2",
   "description": "Simple RESTful API framework for Node.js build on the top of Express",
   "license": "MIT",
   "author": "Krzysztof Winiarski <winiarski.krzysztof@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kwiniarski/apsi"
+    "url": "https://github.com/kwiniarski/surf"
   },
   "engines": {
     "node": ">=0.10 <0.11"
@@ -19,32 +19,34 @@
     "express"
   ],
   "scripts": {
-    "test": "mocha -C -R min",
-    "covergae": "mocha -C -R mocha-lcov-reporter -r blanket > lcov.info"
-  },
-  "config": {
-    "blanket": {
-      "pattern": "apsi/lib"
-    }
+    "test": "_mocha -C -R min ./test-coverage/**/*Spec.*",
+    "instrument": "node ./test/instrument",
+    "coverage": "_mocha -C -R html-cov ./test-coverage/**/*Spec.* > ./test-coverage/report.html",
+    "travis": "_mocha -C -R mocha-lcov-reporter ./test-coverage/**/*Spec.* > lcov.info",
+    "codeclimate": "cat lcov.info | ./node_modules/.bin/codeclimate"
   },
   "dependencies": {
-    "body-parser": "~1.0.0",
+    "body-parser": "~1.10.0",
     "colors": "^1.0.3",
-    "commander": "^2.5.0",
-    "compression": "~1.1.0",
-    "express": "~4.2.0",
-    "fs-extra": "^0.12.0",
+    "commander": "^2.6.0",
+    "compression": "~1.2.2",
+    "express": "~4.10.6",
+    "fs-extra": "^0.13.0",
+    "glob": "^4.3.2",
     "lodash": "^2.4.1",
-    "mysql": "~2.5.0",
-    "sequelize": "~2.0.0-dev13",
-    "winston": "~0.8.0",
-    "winston-mongodb": "~0.5.2"
+    "morgan": "^1.5.0",
+    "sequelize": "~2.0.0-rc4",
+    "winston": "~0.8.0"
   },
   "devDependencies": {
     "blanket": "^1.1.6",
     "chai": "^1.10.0",
-    "mocha": "^1.20.1",
+    "chai-http": "^1.0.0",
+    "codeclimate-test-reporter": "0.0.4",
+    "mocha": "^1.21.5",
+    "mocha-lcov-reporter": "0.0.1",
     "mockery": "^1.4.0",
+    "mysql": "~2.5.0",
     "sinon": "^1.12.2",
     "sinon-chai": "^2.6.0"
   }

@@ -1,14 +1,16 @@
+# ignore file system metadata
+.directory
+
+# ignore editor configuration data
 nbproject
-node_modules
-bower_components
-dist
-.tmp
-.temp
-.build
-.deploy
-.test
 .brackets.json
 .idea
-.directory
-*.log
+
+# ignore installed dependencies
+node_modules
+
+# temporary data
+npm-debug.log
 Gruntfile.json
+test-coverage
+lcov.info
