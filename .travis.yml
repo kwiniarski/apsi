@@ -7,9 +7,12 @@ addons:
   code_climate:
     repo_token: af286f54970b30afee4ad46c8d6b407c02cea276d4da9da6012f4f4a5da2db7c
 
+install:
+  - npm install
+  - npm install -g coffee-script
+
 before_script:
   - "mysql -e 'create database test_apsi;'"
-  - npm install -g coffee-script
   - npm run-script instrument
 
 after_success:
