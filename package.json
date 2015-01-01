@@ -20,8 +20,8 @@
   ],
   "scripts": {
     "instrument": "node ./test/instrument",
-    "coverage": "mocha -C -R html-cov ./test-coverage/**/*Spec.* > ./test-coverage/report.html",
-    "test": "mocha -C -R mocha-lcov-reporter ./test-coverage/**/*Spec.* > lcov.info",
+    "coverage": "mocha -C -R html-cov ./test-coverage/test > ./test-coverage/report.html",
+    "test": "mocha -C -R mocha-lcov-reporter ./test-coverage/test > lcov.info",
     "codeclimate": "cat lcov.info | codeclimate"
   },
   "dependencies": {
