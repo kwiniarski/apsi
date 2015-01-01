@@ -9,7 +9,7 @@ addons:
 
 install:
   - npm install
-  - npm install -g coffee-script
+  - npm install -g coffee-script mocha-lcov-reporter codeclimate-test-reporter
 
 before_script:
   - "mysql -e 'create database test_apsi;'"
