@@ -9,10 +9,10 @@ addons:
 
 before_script:
   - "mysql -e 'create database test_apsi;'"
+  - npm install -g coffee-script
+  - npm run-script instrument
 
 after_success:
-  - npm run-script instrument
-  - npm run-script travis
   - npm run-script codeclimate
 
 

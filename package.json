@@ -19,11 +19,9 @@
     "express"
   ],
   "scripts": {
-    "preinstall": "npm i -g coffee-script",
-    "test": "_mocha -C -R min ./test-coverage/**/*Spec.*",
     "instrument": "node ./test/instrument",
     "coverage": "_mocha -C -R html-cov ./test-coverage/**/*Spec.* > ./test-coverage/report.html",
-    "travis": "_mocha -C -R mocha-lcov-reporter ./test-coverage/**/*Spec.* > lcov.info",
+    "test": "_mocha -C -R mocha-lcov-reporter ./test-coverage/**/*Spec.* > lcov.info",
     "codeclimate": "cat lcov.info | ./node_modules/.bin/codeclimate"
   },
   "dependencies": {
