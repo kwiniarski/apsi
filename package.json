@@ -19,6 +19,7 @@
     "express"
   ],
   "scripts": {
+    "preinstall": "npm i -g coffee-script",
     "test": "_mocha -C -R min ./test-coverage/**/*Spec.*",
     "instrument": "node ./test/instrument",
     "coverage": "_mocha -C -R html-cov ./test-coverage/**/*Spec.* > ./test-coverage/report.html",
