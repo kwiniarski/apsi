@@ -20,9 +20,9 @@
   ],
   "scripts": {
     "instrument": "node ./test/instrument",
-    "coverage": "_mocha -C -R html-cov ./test-coverage/**/*Spec.* > ./test-coverage/report.html",
-    "test": "_mocha -C -R mocha-lcov-reporter ./test-coverage/**/*Spec.* > lcov.info",
-    "codeclimate": "cat lcov.info | ./node_modules/.bin/codeclimate"
+    "coverage": "mocha -C -R html-cov ./test-coverage/**/*Spec.* > ./test-coverage/report.html",
+    "test": "mocha -C -R mocha-lcov-reporter ./test-coverage/**/*Spec.* > lcov.info",
+    "codeclimate": "cat lcov.info | codeclimate"
   },
   "dependencies": {
     "bluebird": "^2.5.3",
