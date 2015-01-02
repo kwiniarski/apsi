@@ -1,6 +1,7 @@
-[![Build Status](https://travis-ci.org/kwiniarski/surf.svg)](https://travis-ci.org/kwiniarski/surf)
-[![Test Coverage](https://codeclimate.com/github/kwiniarski/surf/badges/coverage.svg)](https://codeclimate.com/github/kwiniarski/surf)
-[![Code Climate](https://codeclimate.com/github/kwiniarski/surf/badges/gpa.svg)](https://codeclimate.com/github/kwiniarski/surf)
+[![Build Status](https://img.shields.io/travis/kwiniarski/surf.svg?style=flat-square)](https://travis-ci.org/kwiniarski/surf)
+[![Test Coverage](https://img.shields.io/codeclimate/coverage/github/kwiniarski/surf.svg?style=flat-square)](https://codeclimate.com/github/kwiniarski/surf)
+[![Code Climate](https://img.shields.io/codeclimate/github/kwiniarski/surf.svg?style=flat-square)](https://codeclimate.com/github/kwiniarski/surf)
+[![Gemnasium](https://img.shields.io/gemnasium/kwiniarski/surf.svg?style=flat-square)](https://gemnasium.com/kwiniarski/surf)
 
 # Surf
 
