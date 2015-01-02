@@ -10,7 +10,9 @@ nbproject
 node_modules
 
 # temporary data
+.grunt
 npm-debug.log
 Gruntfile.json
-test-coverage
-lcov.info
+codeclimate.txt
+
+

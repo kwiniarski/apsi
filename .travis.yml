@@ -3,19 +3,14 @@ language: node_js
 node_js:
   - "0.10"
 
-addons:
-  code_climate:
-    repo_token: 0ec01270aca4350c14339ff9aba82763ca0a272cd88f5e2a03ac7e2811730d20
+install:
+  # Install package dependencies
+  - npm install
+  # Additional npm stuff that needs to be global
+  - npm install -g grunt-cli coffee-script
 
-#install:
-#  - npm install
-#  - npm install -g mocha-lcov-reporter codeclimate-test-reporter
+script: grunt travis
 
 before_script:
-  - "mysql -e 'create database test_surf;'"
-  - npm run-script instrument
-
-after_success:
-  - cat lcov.info | ./node_modules/.bin/codeclimate
-
-
+  # Setup database to test
+  - mysql -e "create database test_surf;"
