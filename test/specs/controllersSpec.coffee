@@ -42,6 +42,7 @@ describe 'Controllers provider', ->
   after ->
 
     fsStub.restore()
+    mockery.deregisterAll()
     mockery.disable()
 
   it 'should return list of configured controllers', ->

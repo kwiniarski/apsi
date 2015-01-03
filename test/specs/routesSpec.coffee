@@ -57,21 +57,24 @@ describe 'Route provider', ->
 
   before (done) ->
 
-    sequelize.sync({ force: true }).then ->
+    sequelize.sync
+      force: true
+    .then ->
       Resources.bulkCreate [
         { title: 'Aliquam rutrum molestie rutrum.' }
         { title: 'Nulla laoreet.' }
       ]
+    .then ->
       Users.bulkCreate [
         { name: 'John Brown', email: 'j.brown@gmail.com' }
         { name: 'Mark Down', email: 'mark.down@yahoo.com' }
       ]
     .done done
 
-    mockery.registerMock './models',
+    registerMock './models',
       resources: Resources
       users: Users
-    mockery.registerMock './controllers',
+    registerMock './controllers',
       users: UsersController
     mockery.enable
       warnOnUnregistered: false
@@ -85,6 +88,7 @@ describe 'Route provider', ->
   after (done) ->
 
     server.on 'close', done
+    mockery.deregisterAll()
     mockery.disable()
     server.close()
 

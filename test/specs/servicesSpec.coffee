@@ -37,6 +37,7 @@ describe 'Service provider', ->
   after ->
 
     fsStub.restore()
+    mockery.deregisterAll()
     mockery.disable()
 
   describe '_registry object', ->
