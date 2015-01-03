@@ -3,8 +3,11 @@
  * @copyright (c) 2014 Krzysztof Winiarski
  * @license MIT
  *
- * Middleware witch extends response object with additional
- * properties.
+ * Middleware witch extends response object with additional properties to handle response by unifying its format.
+ * In general Surf API will respond only if client accepts "application/json" format. Otherwise 406 status will
+ * be returned with empty response. Other statuses are handled by Surf blueprints so there should be no need to
+ * think of them. However if you would like to trigger any of those errors manually you should require errors
+ * module.
  *
  */
 
@@ -63,53 +66,8 @@ module.exports = function (req, res, next) {
           .location(location)
           .json(data);
       }
-    },
-    // 400 Bad Request
-    badRequest: {
-      value: function badRequest(err) {
-        var error = err || new Error();
-        error.status = 400;
-        error.name = STATUS_CODES[error.status];
-
-        return next(error);
-      }
-    },
-    // 401 Unauthorized
-    unauthorized: {
-
-    },
-    // 403 Forbidden
-    forbidden: {
-
-    },
-    // 404 Not Found
-    notFound: {
-      value: function notFound() {
-        var error = new Error();
-        error.status = 404;
-        error.name = STATUS_CODES[error.status];
-
-        return next(error);
-      }
-    },
-    // 405 Method Not Allowed
-    methodNotAllowed: {
-      value: function methodNotAllowed() {
-        var error = new Error();
-        error.status = 405;
-        error.name = STATUS_CODES[error.status];
-
-        return next(error);
-      }
-    },
-    // 500 InternalServerError
-    internalServerError: {
-
-    },
-    // 501 Not Implemented
-    notImplemented: {
-
     }
+
 
   });
 

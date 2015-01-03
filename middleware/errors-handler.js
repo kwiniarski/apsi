@@ -7,8 +7,24 @@
 'use strict';
 
 module.exports = function errorsHandler(err, req, res, next) {
-  res.status(err.status || 500).type(err.type || 'json').send({
-    error: err,
-    data: null
+
+  res.status(err.status || 500);
+  res.format({
+    'application/json': function () {
+      res.json({
+        error: err,
+        data: null
+      });
+    },
+    'text/plain': function () {
+      res.send(err);
+    },
+    'text/html': function () {
+      res.send(err);
+    },
+    'default': function () {
+      res.send(err);
+    }
   });
+
 };
