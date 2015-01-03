@@ -1,5 +1,6 @@
 'use strict';
 
+var os = require('os');
 var path = require('path');
 var chai = require('chai');
 var utils = require('chai/lib/chai/utils');
@@ -29,11 +30,14 @@ global.request = chai.request;
 global.mockery = mockery;
 
 global.registerMock = function (pathStr, mockObj) {
+  //console.log('Mocking module "%s" (plus: "%s", "%s")%s', pathStr, path.normalize(pathStr), path.resolve(pathStr), os.EOL);
   mockery.registerMock(pathStr, mockObj);
   mockery.registerMock(path.normalize(pathStr), mockObj);
+  mockery.registerMock(path.resolve(pathStr), mockObj);
 };
 global.deregisterMock = function (pathStr) {
   mockery.deregisterMock(pathStr);
   mockery.deregisterMock(path.normalize(pathStr));
+  mockery.deregisterMock(path.resolve(pathStr));
 };
 

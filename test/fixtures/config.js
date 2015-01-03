@@ -9,5 +9,7 @@ module.exports = {
   CONTROLLERS_DIR: path.normalize('/app/api/controllers'),
   CONTROLLERS_CONFIG: path.normalize('/app/config/controllers'),
   EVENTS_LOG_CONFIG: path.normalize('/app/config/events-log'),
-  ACCESS_LOG_CONFIG: path.normalize('/app/config/access-log')
+  ACCESS_LOG_CONFIG: path.normalize('/app/config/access-log'),
+  MODELS_DIR: path.normalize('/app/api/models'),
+  MODELS_CONFIG: path.normalize('/app/config/models')
 };

@@ -2,7 +2,7 @@
 
 var program = require('commander');
 var express = require('express');
-var util = require('./lib/util');
+var util = require('./lib/support');
 var services = require('./lib/services');
 var routes = require('./lib/routes');
 var policies = require('./lib/policies');
@@ -31,7 +31,7 @@ function server() {
   var log = surf.services.log;
 
   app.use(log.http);
-  app.use(require('./lib/response'));
+
   app.use(require('body-parser').json());
   app.use(policies.passport.authenticate('surf-client', {session: false}));
 
@@ -98,7 +98,7 @@ function migrate(method) {
 
 }
 
-surf.util = util;
+surf.util = utils;
 
 surf.services = {};
 
