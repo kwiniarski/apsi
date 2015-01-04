@@ -1,4 +1,6 @@
 'use strict';
+RequestError = require('../../lib/errors').RequestError
+lodash = require 'lodash'
 
 express = require 'express'
 app = express()
@@ -45,11 +47,16 @@ UsersController =
   find:
     methods: ['get']
     route: /^\/([\w\.]+@[\w\.]+)$/i
-    fn: (req, res) ->
+    fn: (req, res, next) ->
       Users.find
         where:
           email: req.params[0]
-      .then res.ok
+      .done (err, data) ->
+        return next RequestError.BadRequest err if err
+        return next RequestError.NotFound() if lodash.isEmpty(data)
+        res.ok data
+
+
 
 describe 'Route provider', ->
 
@@ -114,25 +121,22 @@ describe 'Route provider', ->
       it 'should create exactly one record with new id', (done) ->
         agent.post('/resources').send({ title: 'Lorem ipsum dolor sit amet.' }).end (err, res) ->
           expect(err).to.be.null
-          expect(res).to.be.json.and.have.status(201).and.have.header 'location', '/resources/3'
-          expect(res.body).to.have.deep.property 'title', 'Lorem ipsum dolor sit amet.'
-          expect(res.body).to.have.deep.property 'id', 3
+          expect(res).to.have.status(201).and.have.header 'location', '/resources/3'
+          expect(res.body).to.be.empty
           done()
 
     describe 'PUT /resources/:id route', ->
       it 'should update record with given id if it exists with new data', (done) ->
         agent.put('/resources/3').send({ title: 'Nunc id velit vel metus.' }).end (err, res) ->
           expect(err).to.be.null
-          expect(res).to.be.json.and.have.status 200
-          expect(res.body).to.have.deep.property 'title', 'Nunc id velit vel metus.'
-          expect(res.body).to.have.deep.property 'id', 3
+          expect(res).to.have.status 204
+          expect(res.body).to.be.empty
           done()
       it 'should create record under given id if it not exists', (done) ->
         agent.put('/resources/4').send({ title: 'Lorem ipsum dolor sit amet.' }).end (err, res) ->
           expect(err).to.be.null
-          expect(res).to.be.json.and.have.status(201).and.have.header 'location', '/resources/4' # cannot test it with SQLite
-          expect(res.body).to.have.deep.property 'title', 'Lorem ipsum dolor sit amet.'
-          expect(res.body).to.have.deep.property 'id', 4
+          expect(res).to.have.status(201).and.have.header 'location', '/resources/4' # cannot test it with SQLite
+          expect(res.body).to.be.empty
           done()
 
     describe 'DELETE /resources/:id route', ->
@@ -140,6 +144,7 @@ describe 'Route provider', ->
         agent.delete('/resources/4').end (err, res) ->
           expect(err).to.be.null
           expect(res).to.have.status 204
+          expect(res.body).to.be.empty
           done()
 
   describe 'when controller is created for the resource model', ->

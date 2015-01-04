@@ -13,7 +13,6 @@
 
 'use strict';
 
-var _ = require('lodash');
 var RequestError = require('../lib/errors').RequestError;
 
 module.exports = function (req, res, next) {
@@ -33,11 +32,6 @@ module.exports = function (req, res, next) {
     // 200 OK
     ok: {
       value: function ok(data) {
-
-        if (_.isEmpty(data)) {
-          return next(RequestError.NotFound());
-        }
-
         return res
           .status(200)
           .json(data);
@@ -45,16 +39,16 @@ module.exports = function (req, res, next) {
     },
     // 201 Created
     created: {
-      value: function created(data, location) {
+      value: function created(location) {
         return res
           .location(location)
           .status(201)
-          .json(data);
+          .end();
       }
     },
     // 204 No Content
-    deleted: {
-      value: function created(data) {
+    noContent: {
+      value: function deleted() {
         return res
           .status(204)
           .end();
