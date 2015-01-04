@@ -56,10 +56,18 @@ module.exports = function (grunt) {
       test: {
         src: ['<%= destDir %>/test/**/*.coffee']
       },
-      coverage: {
+      coverageLcov: {
         options: {
           reporter: 'mocha-lcov-reporter',
           captureFile: '<%= destDir %>/coverage.lcov',
+          quiet: true
+        },
+        src: ['<%= destDir %>/test/**/*.coffee']
+      },
+      coverageHtml: {
+        options: {
+          reporter: 'html-cov',
+          captureFile: '<%= destDir %>/coverage.html',
           quiet: true
         },
         src: ['<%= destDir %>/test/**/*.coffee']
@@ -83,7 +91,8 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-codeclimate');
 
   grunt.registerTask('build', ['clean', 'copy', 'blanket']);
-  grunt.registerTask('test', ['build', 'mochaTest', 'clean']);
-  grunt.registerTask('travis', ['build', 'mochaTest', 'codeclimate', 'clean']);
+  grunt.registerTask('test', ['build', 'mochaTest:test', 'clean']);
+  grunt.registerTask('coverage', ['build', 'mochaTest:coverageHtml']);
+  grunt.registerTask('travis', ['build', 'mochaTest:coverageLcov', 'codeclimate', 'clean']);
 };
 
