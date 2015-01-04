@@ -6,7 +6,7 @@ module.exports = {
   APPLICATION_SERVICES_CONFIG_DIR: pathJoin(baseDir, 'config/services'),
   CONTROLLERS_DIR: pathJoin(baseDir, 'api/controllers'),
   CONTROLLERS_CONFIG: pathJoin(baseDir, 'config/controllers'),
-  EVENT_LOG_CONFIG: pathJoin(baseDir, 'config/event-log'),
+  EVENTS_LOG_CONFIG: pathJoin(baseDir, 'config/events-log'),
   ACCESS_LOG_CONFIG: pathJoin(baseDir, 'config/access-log'),
   MODELS_DIR: pathJoin(baseDir, 'api/models'),
   MODELS_CONFIG: pathJoin(baseDir, 'config/models'),

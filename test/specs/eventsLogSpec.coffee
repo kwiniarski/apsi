@@ -15,12 +15,12 @@ setupHelper = (eventsLogFixture = {}) ->
     warnOnReplace: false
     useCleanCache: true
 
-  registerMock '../config', configFixture
+  registerMock '../../config', configFixture
   registerMock '/app/config/events-log', eventsLogFixture
 
   fakes[transport] = sinon.stub(object.prototype, 'log').returns() for transport, object of winston.transports
 
-  log = require '../../lib/events-log'
+  log = require '../../lib/log/events'
 
 describe 'Events log provider', ->
 
