@@ -13,7 +13,8 @@
 
 'use strict';
 
-var STATUS_CODES = require('http').STATUS_CODES;
+var _ = require('lodash');
+var RequestError = require('../lib/errors').RequestError;
 
 module.exports = function (req, res, next) {
 
@@ -29,48 +30,37 @@ module.exports = function (req, res, next) {
       value: finishedAt
     },
 
-    formatOutputData: {
-      value: function (data) {
-        return {
-          errors: [],
-          data: data
-        };
-      }
-    },
-
     // 200 OK
     ok: {
       value: function ok(data) {
+
+        if (_.isEmpty(data)) {
+          return next(RequestError.NotFound());
+        }
+
         return res
           .status(200)
-          .format({
-            'application/json': function () {
-              res.json(data);
-            },
-            'default': function () {
-              var error = new Error();
-              error.status = 406;
-              error.name = STATUS_CODES[error.status];
-              error.type = 'html';
-
-              return next(error);
-            }
-          });
+          .json(data);
       }
     },
     // 201 Created
     created: {
       value: function created(data, location) {
         return res
-          .status(201)
           .location(location)
+          .status(201)
           .json(data);
       }
+    },
+    // 204 No Content
+    deleted: {
+      value: function created(data) {
+        return res
+          .status(204)
+          .end();
+      }
     }
-
-
   });
-
 
   next();
 };

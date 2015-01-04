@@ -23,7 +23,7 @@ describe 'RequestError', ->
       expect(requestError).to.have.property 'status', 500
 
     it 'should default to 500 Internal Server Error when status code is ommited', ->
-      requestError = RequestError error
+      requestError = new RequestError error
       expect(requestError).to.have.property 'status', 500
       expect(requestError).to.have.property 'name', 'Internal Server Error'
       expect(requestError).to.have.property 'message', 'Application error'
@@ -31,13 +31,13 @@ describe 'RequestError', ->
   describe 'error message', ->
 
     it 'should default to passed HTTP status code if not provided directly', ->
-      expect((RequestError 404).toString()).to.equal 'Not Found: Not Found'
+      expect((new RequestError 404).toString()).to.equal 'Not Found: Not Found'
 
     it 'should be accepted as a string', ->
-      expect((RequestError 404, 'Resource not found').toString()).to.equal 'Not Found: Resource not found'
+      expect((new RequestError 404, 'Resource not found').toString()).to.equal 'Not Found: Resource not found'
 
     it 'should be accepted as an Error instance', ->
-      requestError = RequestError 404, error
+      requestError = new RequestError 404, error
       expect(requestError.toString()).to.equal 'Not Found: Application error'
       expect(requestError.stack).to.contain 'Error: Application error'
 
