@@ -35,7 +35,7 @@ describe 'Models provider', ->
 
     registerMock '../config', configFixture
     registerMock './support', support
-    registerMock './events-log',
+    registerMock './log/events',
       auto: sinon.spy()
     registerMock '/app/api/models/resources', resources
     registerMock '/app/api/models/users', users

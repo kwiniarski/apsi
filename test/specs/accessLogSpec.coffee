@@ -23,13 +23,13 @@ describe 'Access log provider', ->
       warnOnReplace: false
       useCleanCache: true
 
-    registerMock '../config', configFixture
+    registerMock '../../config', configFixture
     registerMock '/app/config/access-log', accessLogConfigFixture
     registerMock 'on-finished', onFinishedStub.callsArg 1
 
     fakes[transport] = sinon.stub(object.prototype, 'log').returns() for transport, object of winston.transports
 
-    log = require '../../lib/access-log'
+    log = require '../../lib/log/access'
 
   afterEach ->
 
