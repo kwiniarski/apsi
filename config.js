@@ -10,5 +10,7 @@ module.exports = {
   ACCESS_LOG_CONFIG: pathJoin(baseDir, 'config/access-log'),
   MODELS_DIR: pathJoin(baseDir, 'api/models'),
   MODELS_CONFIG: pathJoin(baseDir, 'config/models'),
+  POLICIES_CONFIG: pathJoin(baseDir, 'config/policies'),
+  POLICIES_DIR: pathJoin(baseDir, 'api/policies'),
   APSI_DIR: __dirname
 };

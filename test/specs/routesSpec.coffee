@@ -1,7 +1,10 @@
 'use strict';
 RequestError = require('../../lib/errors').RequestError
 lodash = require 'lodash'
-
+configFixture = require '../fixtures/config'
+support = require '../../lib/support'
+supportStub = null
+sinon = require 'sinon'
 express = require 'express'
 app = express()
 app.use require '../../middleware/request'
@@ -30,37 +33,56 @@ Users = sequelize.define 'users',
     allowNull: true
 
 UsersController =
-  listAvatarImages:
-    methods: ['get']
-    route: '/list-avatar-images'
-    fn: (req, res) ->
-      Users.findAll { attributes: ['avatar'] }
-      .then res.ok
-  addAvatarImage:
-    methods: ['post']
-    route: '/add-image'
-    fn: (req, res) ->
-      Users.update { avatar: req.body.image }, { where: id: req.param 'id' }
-      .then ->
-        Users.find req.param 'id'
-      .then res.ok
-  find:
-    methods: ['get']
-    route: /^\/([\w\.]+@[\w\.]+)$/i
-    fn: (req, res, next) ->
-      Users.find
-        where:
-          email: req.params[0]
-      .done (err, data) ->
-        return next RequestError.BadRequest err if err
-        return next RequestError.NotFound() if lodash.isEmpty(data)
-        res.ok data
+  listAvatarImages: (req, res) ->
+    Users.findAll { attributes: ['avatar'] }
+    .then res.ok
+  addAvatarImage: (req, res) ->
+    Users.update { avatar: req.body.image }, { where: id: req.param 'id' }
+    .then ->
+      Users.find req.param 'id'
+    .then res.ok
+  find: (req, res, next) ->
+    Users.find
+      where:
+        email: req.params[0]
+    .done (err, data) ->
+      return next RequestError.BadRequest err if err
+      return next RequestError.NotFound() if lodash.isEmpty(data)
+      res.ok data
 
+controllersConfigFixture =
+  users:
+    find:
+      route: /^\/([\w\.]+@[\w\.]+)$/i
+    addAvatarImage:
+      methods: ['post']
+      route: '/add-image'
 
+policiesConfigFixture =
+  '*': ['isMobile']
+  resources:
+    create: ['isAdmin', 'isAuthenticated']
+  users:
+    '*': ['isAdmin']
+
+middlewareMock = (req, res, next) ->
+  next();
+isMobile = sinon.spy middlewareMock
+isAuthenticated = sinon.spy middlewareMock
+isAdmin = sinon.spy middlewareMock
 
 describe 'Route provider', ->
 
   before (done) ->
+
+    supportStub = sinon.stub support, 'listFiles'
+    supportStub.withArgs(configFixture.CONTROLLERS_DIR).returns
+      users: '/app/api/controllers/users'
+    supportStub.withArgs(configFixture.POLICIES_DIR).returns
+      isMobile: '/app/api/policies/isMobile'
+      isAuthenticated: '/app/api/policies/isAuthenticated'
+      isAdmin: '/app/api/policies/isAdmin'
+    supportStub.throws 'STUB_ENOENT'
 
     sequelize.sync
       force: true
@@ -76,11 +98,18 @@ describe 'Route provider', ->
       ]
     .done done
 
+    registerMock '/app/config/controllers', controllersConfigFixture
+    registerMock '/app/config/policies', policiesConfigFixture
+    registerMock '/app/api/controllers/users', UsersController
+    registerMock '/app/api/policies/isMobile', isMobile
+    registerMock '/app/api/policies/isAuthenticated', isAuthenticated
+    registerMock '/app/api/policies/isAdmin', isAdmin
+    registerMock '../config', configFixture
+    registerMock './support', support
     registerMock './models',
       resources: Resources
       users: Users
-    registerMock './controllers',
-      users: UsersController
+
     mockery.enable
       warnOnUnregistered: false
       warnOnReplace: false
@@ -93,6 +122,7 @@ describe 'Route provider', ->
   after (done) ->
 
     server.on 'close', done
+    supportStub.restore()
     mockery.deregisterAll()
     mockery.disable()
     server.close()
