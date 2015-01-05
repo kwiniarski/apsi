@@ -58,6 +58,19 @@ controllersConfigFixture =
       methods: ['post']
       route: '/add-image'
 
+policiesConfigFixture =
+  '*': ['isMobile']
+  resources:
+    create: ['isAdmin', 'isAuthenticated']
+  users:
+    '*': ['isAdmin']
+
+middlewareMock = (req, res, next) ->
+  next();
+isMobile = sinon.spy middlewareMock
+isAuthenticated = sinon.spy middlewareMock
+isAdmin = sinon.spy middlewareMock
+
 describe 'Route provider', ->
 
   before (done) ->
@@ -65,6 +78,10 @@ describe 'Route provider', ->
     supportStub = sinon.stub support, 'listFiles'
     supportStub.withArgs(configFixture.CONTROLLERS_DIR).returns
       users: '/app/api/controllers/users'
+    supportStub.withArgs(configFixture.POLICIES_DIR).returns
+      isMobile: '/app/api/policies/isMobile'
+      isAuthenticated: '/app/api/policies/isAuthenticated'
+      isAdmin: '/app/api/policies/isAdmin'
     supportStub.throws 'STUB_ENOENT'
 
     sequelize.sync
@@ -81,10 +98,14 @@ describe 'Route provider', ->
       ]
     .done done
 
-    registerMock './support', support
     registerMock '/app/config/controllers', controllersConfigFixture
+    registerMock '/app/config/policies', policiesConfigFixture
     registerMock '/app/api/controllers/users', UsersController
+    registerMock '/app/api/policies/isMobile', isMobile
+    registerMock '/app/api/policies/isAuthenticated', isAuthenticated
+    registerMock '/app/api/policies/isAdmin', isAdmin
     registerMock '../config', configFixture
+    registerMock './support', support
     registerMock './models',
       resources: Resources
       users: Users
