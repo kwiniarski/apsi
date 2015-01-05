@@ -11,5 +11,7 @@ module.exports = {
   EVENTS_LOG_CONFIG: path.normalize('/app/config/events-log'),
   ACCESS_LOG_CONFIG: path.normalize('/app/config/access-log'),
   MODELS_DIR: path.normalize('/app/api/models'),
-  MODELS_CONFIG: path.normalize('/app/config/models')
+  MODELS_CONFIG: path.normalize('/app/config/models'),
+  POLICIES_CONFIG: path.normalize('/app/config/policies'),
+  POLICIES_DIR: path.normalize('/app/api/policies')
 };
