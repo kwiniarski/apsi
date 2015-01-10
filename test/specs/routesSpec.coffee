@@ -116,7 +116,7 @@ describe 'Route provider', ->
       useCleanCache: true
 
     app.use require '../../lib/routes'
-    app.use require '../../middleware/errors-handler'
+    app.use require '../../middleware/errorsHandler'
     server = app.listen 9000
 
   after (done) ->
