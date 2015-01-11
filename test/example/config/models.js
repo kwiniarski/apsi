@@ -6,4 +6,14 @@
 
 'use strict';
 
-
+module.exports = {
+  connection: {
+    database: 'test_surf',
+    user: process.env.USER,
+    password: ''
+  },
+  options: {
+    dialect: 'mysql',
+    logging: false
+  }
+};

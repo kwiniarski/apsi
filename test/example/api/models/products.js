@@ -6,4 +6,9 @@
 
 'use strict';
 
+module.exports = function (sequelize, Sequelize) {
+  return sequelize.define('products', {
+    title: Sequelize.STRING
+  });
+};
 
