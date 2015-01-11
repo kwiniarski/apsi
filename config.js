@@ -2,6 +2,15 @@
  * @author Krzysztof Winiarski
  * @copyright (c) 2014 Krzysztof Winiarski
  * @license MIT
+ *
+ * Main configuration loader. This is the place where defaults are set
+ * and all extending happens. Load order:
+ * - command line arguments
+ * - env variables
+ * - .surfrc file
+ *
+ * rc lib handles env and .rc file. Command line arguments are passed
+ * from lib/core/cmd.js using global object.
  */
 
 'use strict';
@@ -10,8 +19,8 @@ var rc = require('rc')
   , join = require('path').join
   , config = {
       SURF_DIR: __dirname,
-      BASE_DIR: global.BASE_DIR || process.cwd(),
-      PORT: global.PORT || 3000
+      BASE_DIR: global.args.BASE_DIR || process.cwd(),
+      PORT: global.args.PORT || 3000
     }
   , directories = {
       MODELS_DIR: 'api/models',
