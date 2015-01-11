@@ -6,7 +6,4 @@
 
 'use strict';
 
-module.exports = function (req, res, next) {
-  req._startedAt = process.hrtime();
-  next();
-};
+module.exports = require('../lib/log/access');

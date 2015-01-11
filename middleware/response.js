@@ -13,8 +13,6 @@
 
 'use strict';
 
-var RequestError = require('../lib/errors').RequestError;
-
 module.exports = function (req, res, next) {
 
   var finishedAt = null;

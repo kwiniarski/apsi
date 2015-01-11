@@ -26,7 +26,7 @@ policiesConfigFixture =
   resources:
     create: ['isAdmin', 'isAuthenticated']
   users:
-    '*': ['isAdmin']
+    '*': 'isAdmin'
 
 isMobile = ->
 isAuthenticated = ->
