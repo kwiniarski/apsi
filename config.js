@@ -32,7 +32,8 @@ var rc = require('rc')
       SERVICES_DIR: 'api/services',
       SERVICES_CONFIG_DIR: 'config/services',
       EVENTS_LOG_CONFIG: 'config/events-log',
-      ACCESS_LOG_CONFIG: 'config/access-log'
+      ACCESS_LOG_CONFIG: 'config/access-log',
+      MIGRATIONS_DIR: 'migrations'
     };
 
 for (var key in directories) {
