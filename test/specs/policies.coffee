@@ -26,7 +26,7 @@ policiesConfigFixture =
   resources:
     create: ['isAdmin', 'isAuthenticated']
   users:
-    '*': 'isAdmin'
+    '*': 'is-admin'
 
 isMobile = ->
 isAuthenticated = ->
@@ -39,7 +39,7 @@ describe 'Policies provider', ->
     supportStub.withArgs(configFixture.POLICIES_DIR).returns
       isMobile: path.normalize configFixture.POLICIES_DIR + '/isMobile'
       isAuthenticated: path.normalize configFixture.POLICIES_DIR + '/isAuthenticated'
-      isAdmin: path.normalize configFixture.POLICIES_DIR + '/isAdmin'
+      'is-admin': path.normalize configFixture.POLICIES_DIR + '/is-admin'
     supportStub.throws 'STUB_ENOENT'
 
     registerMock './support', support
@@ -47,7 +47,7 @@ describe 'Policies provider', ->
     registerMock '/app/config/policies', policiesConfigFixture
     registerMock '/app/api/policies/isMobile', isMobile
     registerMock '/app/api/policies/isAuthenticated', isAuthenticated
-    registerMock '/app/api/policies/isAdmin', isAdmin
+    registerMock '/app/api/policies/is-admin', isAdmin
 
     mockery.enable
       warnOnUnregistered: false
