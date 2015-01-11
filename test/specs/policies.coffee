@@ -37,16 +37,16 @@ describe 'Policies provider', ->
   beforeEach ->
     supportStub = sinon.stub support, 'listFiles'
     supportStub.withArgs(configFixture.POLICIES_DIR).returns
-      isMobile: path.normalize configFixture.POLICIES_DIR + '/isMobile'
-      isAuthenticated: path.normalize configFixture.POLICIES_DIR + '/isAuthenticated'
-      'is-admin': path.normalize configFixture.POLICIES_DIR + '/is-admin'
+      isMobile: path.normalize configFixture.POLICIES_DIR + '/is-mobile'
+      isAuthenticated: path.normalize configFixture.POLICIES_DIR + '/is-authenticated'
+      isAdmin: path.normalize configFixture.POLICIES_DIR + '/is-admin'
     supportStub.throws 'STUB_ENOENT'
 
     registerMock './support', support
     registerMock '../config', configFixture
     registerMock '/app/config/policies', policiesConfigFixture
-    registerMock '/app/api/policies/isMobile', isMobile
-    registerMock '/app/api/policies/isAuthenticated', isAuthenticated
+    registerMock '/app/api/policies/is-mobile', isMobile
+    registerMock '/app/api/policies/is-authenticated', isAuthenticated
     registerMock '/app/api/policies/is-admin', isAdmin
 
     mockery.enable
