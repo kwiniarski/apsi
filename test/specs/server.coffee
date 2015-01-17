@@ -29,10 +29,10 @@ describe 'Server core', ->
     registerMock './support', support
     registerMock '../config', configFixture
     registerMock '../../config', configFixture
-    registerMock '../services', {}
-    registerMock '../models', {}
-    registerMock '../routes', {}
-    registerMock '../log/events',
+    registerMock './services', {}
+    registerMock './models', {}
+    registerMock './routes', {}
+    registerMock './log/events',
       info: ->
 
     mockery.enable
@@ -40,7 +40,7 @@ describe 'Server core', ->
       warnOnReplace: false
       useCleanCache: true
 
-    server = require '../../lib/core/server'
+    server = require '../../lib/server'
 
     server.hooks.afterStart = sinon.spy(server.hooks.afterStart)
     server.start done

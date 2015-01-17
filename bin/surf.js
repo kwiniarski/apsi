@@ -1,31 +1,27 @@
-/**
- * @author Krzysztof Winiarski
- * @copyright (c) 2014 Krzysztof Winiarski
- * @license MIT
- *
- * Command line processor. It allows to overwrite some configuration values
- * but it should not set any default, as they are set in config.js.
- */
-
+#!/usr/bin/env node
 'use strict';
+
+process.bin = process.title = 'surf';
 
 var program = require('commander')
   , fs = require('fs-extra')
   , path = require('path')
-  , pkg = fs.readJsonFileSync('../../package.json');
+  , pkg = fs.readJsonFileSync(path.resolve(__dirname, '../package.json'))
+  , LIB_MODELS = path.resolve(__dirname, '../lib/models')
+  , LIB_SERVER = path.resolve(__dirname, '../lib/server');
 
 program.version(pkg.version)
-  .option('-b, --baseDir <path>', 'Point new base dir', function (dir) {
+  .option('-b, --baseDir <path>', 'point new base dir', function (dir) {
     return path.resolve(process.cwd(), dir);
   })
-  .option('-f, --force', 'Make some commands more agresive');
+  .option('-f, --force', 'make some commands more agresive');
 
 program
   .command('sync')
   .description('Synchronize database')
   .action(function () {
     configure(this);
-    require('../models').sequelize.sync({
+    require(LIB_MODELS).sequelize.sync({
       force: !!this.parent.force
     });
   });
@@ -33,11 +29,11 @@ program
 program
   .command('migrate')
   .description('Migrate database')
-  .option('-s, --sync', 'Synchronize before migration')
-  .option('-t, --type [type]', 'Migration type [up|down]', 'up')
+  .option('-s, --sync', 'synchronize before migration')
+  .option('-t, --type [type]', 'migration type [up|down]', 'up')
   .action(function () {
     var config = configure(this)
-      , db = require('../models').sequelize;
+      , db = require(LIB_MODELS).sequelize;
 
     if (this.sync) {
       db.sync({
@@ -62,12 +58,15 @@ program
   .option('-p, --port [number]', 'Port number', Number)
   .action(function () {
     configure(this);
-    require('./server').start();
+    require(LIB_SERVER).start();
   });
 
 
 program.parse(process.argv);
 
+if (process.argv.length < 3) {
+  program.help();
+}
 
 function configure(program) {
   global.args = {};
@@ -77,5 +76,5 @@ function configure(program) {
   Object.freeze(global.args);
 
   // Initialize config
-  return require('../../config');
+  return require('../config');
 }
