@@ -8,10 +8,10 @@
 
 module.exports = {
   '*': ['isTrusted'],
-  resources: {
-    create: ['isAuthenticated', 'asUser']
+  products: {
+    create: 'isAuthenticated, asUser'
   },
   users: {
-    '*': ['isAuthenticated', 'asAdmin']
+    '*': ['is-authenticated', 'asAdmin']
   }
 };

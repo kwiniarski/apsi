@@ -9,19 +9,6 @@
 module.exports = function errorsHandler(err, req, res, next) {
 
   res.status(err.status || 500);
-  res.format({
-    'application/json': function () {
-      res.json(err);
-    },
-    'text/plain': function () {
-      res.send(err);
-    },
-    'text/html': function () {
-      res.send(err);
-    },
-    'default': function () {
-      res.send(err);
-    }
-  });
+  res.json(err);
 
 };

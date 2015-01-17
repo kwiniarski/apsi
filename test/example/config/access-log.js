@@ -6,11 +6,16 @@
 
 'use strict';
 
+var devNull = require('dev-null');
+
 module.exports = {
   transports: {
-    Console: true,
+    Console: {
+      silent: true
+    },
     File: {
-      stream: process.stdout
+      silent: true,
+      stream: devNull()
     }
   }
 };

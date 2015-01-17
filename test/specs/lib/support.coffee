@@ -13,18 +13,16 @@ describe 'Support module', ->
     fsStub.withArgs('dirOne').returns ['one', 'two']
     fsStub.throws 'STUB_ERROR'
 
-    registerMock 'fs-extra', fs
-
+    mockery.registerMock 'fs-extra', fs
     mockery.enable
       warnOnUnregistered: false
-      warnOnReplace: false
       useCleanCache: true
 
-    support = require '../../lib/support'
+    support = require '../../../lib/support'
 
   afterEach ->
     fsStub.restore()
-    mockery.deregisterAll()
+    mockery.deregisterMock 'fs-extra'
     mockery.disable()
 
   describe '#loadFiles helper', ->
@@ -34,6 +32,10 @@ describe 'Support module', ->
   describe '#listFiles helper', ->
     it 'should list files from directory', ->
       expect(support.listFiles('dirOne')).to.be.an 'object';
+
+    it 'should throw error when cannot read directory', ->
+      try support.listFiles 'dirNotExists' catch error
+      expect(error).to.be.not.undefined
 
   describe '#isCamelCase', ->
     it 'should return true if string is camel cased', ->

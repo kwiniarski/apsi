@@ -6,4 +6,6 @@
 
 'use strict';
 
-module.exports = function () {};
+module.exports = function FacebookService(config) {
+  this.config = config;
+};

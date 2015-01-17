@@ -7,5 +7,5 @@
 'use strict';
 
 module.exports = {
-  find: function () {}
+  apiKey: 'test'
 };

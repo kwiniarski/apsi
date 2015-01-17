@@ -31,15 +31,16 @@ module.exports = {
       attributes: ['avatar']
     }).then(res.ok);
   },
-  addAvatarImage: function (res, req) {
+  addAvatarImage: function (req, res) {
+    var id = req.param('id');
     surf.models.users.update({
       avatar: req.body.image
     }, {
       where: {
-        id: req.param('id')
+        id: id
       }
     }).then(function(){
-      return surf.models.users.find(req.param('id'));
+      return surf.models.users.find(id);
     }).then(res.ok);
   }
 };

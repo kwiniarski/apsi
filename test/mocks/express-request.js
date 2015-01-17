@@ -9,6 +9,8 @@ module.exports = function (method, url) {
       referer: 'http://referer.com',
       'user-agent': 'PhantomJS'
     },
+    body: {},
+    params: [],
     httpVersionMajor: 1,
     httpVersionMinor: 1
   };

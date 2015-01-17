@@ -21,22 +21,35 @@ function serializeBody (body) {
 
 module.exports = function (status, body) {
 
-  var responseBody = serializeBody(body);
+  var responseBody = serializeBody(body)
+    , response = {
+        _header: {},
+        _headers: {
+          'content-length': responseBody.length
+        },
+        body: responseBody,
+        end: function () {
+          return response;
+        },
+        json: function () {
+          return response;
+        },
+        status: function () {
+          return response;
+        },
+        location: function () {
+          return response;
+        },
+        statusCode: status || 200,
+        finished: true,
+        complete: true,
+        socket: {
+          writable: false,
+          readable: false
+        },
+        on: emitter.on,
+        emit: emitter.emit
+      };
 
-  return {
-    _header: {},
-    _headers: {
-      'content-length': responseBody.length
-    },
-    body: responseBody,
-    statusCode: status || 200,
-    finished: true,
-    complete: true,
-    socket: {
-      writable: false,
-      readable: false
-    },
-    on: emitter.on,
-    emit: emitter.emit
-  };
+  return response;
 };

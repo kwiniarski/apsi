@@ -7,7 +7,7 @@
 'use strict';
 
 module.exports = {
-  user: {
+  users: {
     find: {
       route: /^\/([\w\.]+@[\w\.]+)$/i
     },

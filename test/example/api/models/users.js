@@ -7,7 +7,10 @@
 'use strict';
 
 module.exports = function (sequelize, Sequelize) {
-  return sequelize.define('users', {
+
+  var user;
+
+  user = sequelize.define('users', {
     name: Sequelize.STRING,
     email: {
       type: Sequelize.STRING,
@@ -19,5 +22,14 @@ module.exports = function (sequelize, Sequelize) {
       type: Sequelize.STRING,
       allowNull: true
     }
+  }, {
+    classMethods: {
+      associate: function(models) {
+        user.belongsToMany(models.roles);
+      }
+    }
   });
+
+  return user;
+
 };

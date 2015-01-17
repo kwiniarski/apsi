@@ -6,8 +6,6 @@
 
 'use strict';
 
-var sinon = require('sinon');
-
-module.exports = sinon.spy(function (req, res, next) {
+module.exports = function isTrustedPolicy(req, res, next) {
   next();
-});
+};
