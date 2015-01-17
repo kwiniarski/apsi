@@ -15,6 +15,10 @@
 
 'use strict';
 
+if (!global.args) {
+  global.args = {};
+}
+
 var rc = require('rc')
   , join = require('path').join
   , config = {
