@@ -9,13 +9,39 @@ Simple RESTful API framework for Node.js build on the top of Express.
 
 ## Note
 
-This software is under development. It's not ready for use yet.
+This software is under development. It's not ready for use yet. Moreover it uses
+[Sequelize](https://github.com/sequelize/sequelize.git) 2.0.0 RC version.
+
+## Installation
+
+```
+npm install surfjs --save
+```
+
+## Testing
+
+Before you can run tests make sure you have `devDependencies` installed. Also you will
+need working MySQL database with `test_surf` database ([more on that here](docs/test.md)).
+To run test suite just use:
+
+```
+npm test
+```
+
+To generate test coverage report run:
+
+```
+grunt coverage
+```
+
+Report will be created in `./.grunt` dir. Make sure to have `grunt-cli` installed
+globally before you use Grunt.
 
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2014 Krzysztof Winiarski
+Copyright (c) 2014-2015 Krzysztof Winiarski
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

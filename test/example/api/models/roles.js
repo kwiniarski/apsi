@@ -15,7 +15,9 @@ module.exports = function (sequelize, Sequelize) {
   }, {
     classMethods: {
       associate: function(models) {
-        roles.belongsToMany(models.users);
+        roles.belongsToMany(models.users, {
+          through: 'user_roles'
+        });
       }
     }
   });

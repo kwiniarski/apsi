@@ -32,7 +32,7 @@ module.exports = {
     }).then(res.ok);
   },
   addAvatarImage: function (req, res) {
-    var id = req.param('id');
+    var id = req.body.id;
     surf.models.users.update({
       avatar: req.body.image
     }, {
