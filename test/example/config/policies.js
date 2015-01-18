@@ -1,0 +1,17 @@
+/**
+ * @author Krzysztof Winiarski
+ * @copyright (c) 2014 Krzysztof Winiarski
+ * @license MIT
+ */
+
+'use strict';
+
+module.exports = {
+  '*': ['isTrusted'],
+  products: {
+    create: 'isAuthenticated, asUser'
+  },
+  users: {
+    '*': ['is-authenticated', 'asAdmin']
+  }
+};

@@ -1,19 +1,23 @@
 'use strict';
 
-var os = require('os');
-var path = require('path');
 var chai = require('chai');
 var utils = require('chai/lib/chai/utils');
 var mockery = require('mockery');
 
 /* jshint -W030 */
-utils.addMethod(chai.Assertion.prototype, 'path', function (str) {
-  new chai.Assertion(this._obj).to.be.equal(str.replace(/\//g, path.sep));
-});
-
 utils.addMethod(chai.Assertion.prototype, 'readOnly', function (property) {
   var descriptor = Object.getOwnPropertyDescriptor(this._obj, property);
   new chai.Assertion(descriptor.writable).to.be.false;
+});
+utils.addMethod(chai.Assertion.prototype, 'memberFunctions', function (members) {
+  var check = true;
+  for (var i = 0, j = members.length; i < j; i++) {
+    check = check
+      && typeof members[i] === 'function'
+      && typeof this._obj[i] === 'function'
+      && members[i].toString() === this._obj[i].toString();
+  }
+  new chai.Assertion(check).to.be.true;
 });
 /* jshint +W030 */
 
@@ -29,15 +33,29 @@ global.assert = chai.assert;
 global.request = chai.request;
 global.mockery = mockery;
 
-global.registerMock = function (pathStr, mockObj) {
-  //console.log('Mocking module "%s" (plus: "%s", "%s")%s', pathStr, path.normalize(pathStr), path.resolve(pathStr), os.EOL);
-  mockery.registerMock(pathStr, mockObj);
-  mockery.registerMock(path.normalize(pathStr), mockObj);
-  mockery.registerMock(path.resolve(pathStr), mockObj);
-};
-global.deregisterMock = function (pathStr) {
-  mockery.deregisterMock(pathStr);
-  mockery.deregisterMock(path.normalize(pathStr));
-  mockery.deregisterMock(path.resolve(pathStr));
-};
+mockery.registerSubstitute('../../config', '../../test/fixtures/config');
+mockery.registerSubstitute('../config', '../test/fixtures/config');
+mockery.registerSubstitute('./support', '../test/mocks/support');
 
+global.createServerAndSyncDatabase = function (done) {
+  var server = require('../lib/server')
+    , models = server.models;
+
+  models.sequelize.sync({
+    force: true
+  }).then(function () {
+    models.products.bulkCreate([
+      { title: 'Aliquam rutrum molestie rutrum.' },
+      { title: 'Nulla laoreet.' }
+    ]);
+  }).then(function () {
+    models.users.bulkCreate([
+      { name: 'John Brown', email: 'j.brown@gmail.com' },
+      { name: 'Mark Down', email: 'mark.down@yahoo.com' }
+    ]);
+  }).done(function () {
+    server.start(done);
+  });
+
+  return server;
+};

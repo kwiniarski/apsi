@@ -29,6 +29,7 @@ module.exports = function (req, res, next) {
 
     // 200 OK
     ok: {
+      writable: true,
       value: function ok(data) {
         return res
           .status(200)
@@ -37,6 +38,7 @@ module.exports = function (req, res, next) {
     },
     // 201 Created
     created: {
+      writable: true,
       value: function created(location) {
         return res
           .location(location)
@@ -46,6 +48,7 @@ module.exports = function (req, res, next) {
     },
     // 204 No Content
     noContent: {
+      writable: true,
       value: function deleted() {
         return res
           .status(204)

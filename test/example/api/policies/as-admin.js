@@ -6,9 +6,6 @@
 
 'use strict';
 
-module.exports = function errorsHandler(err, req, res, next) {
-
-  res.status(err.status || 500);
-  res.json(err);
-
+module.exports = function asAdminPolicy(req, res, next) {
+  next();
 };

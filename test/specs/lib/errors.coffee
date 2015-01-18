@@ -1,6 +1,6 @@
 'use strict';
 
-errors = require '../../lib/errors'
+errors = require '../../../lib/errors'
 RequestError = errors.RequestError
 requestError = null
 error = null

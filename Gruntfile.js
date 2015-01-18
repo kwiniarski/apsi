@@ -50,7 +50,7 @@ module.exports = function (grunt) {
         reporter: 'spec',
         require: [
           'coffee-script/register',
-          '<%= testDir %>/bootstrap',
+          '<%= testDir %>/bootstrap'
         ]
       },
       test: {
