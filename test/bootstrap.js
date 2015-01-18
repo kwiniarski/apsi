@@ -1,7 +1,5 @@
 'use strict';
 
-var os = require('os');
-var path = require('path');
 var chai = require('chai');
 var utils = require('chai/lib/chai/utils');
 var mockery = require('mockery');
