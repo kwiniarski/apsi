@@ -1,6 +1,6 @@
 {
   "name": "surfjs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple RESTful API framework for Node.js build on the top of Express",
   "license": "MIT",
   "author": "Krzysztof Winiarski <winiarski.krzysztof@gmail.com>",
@@ -18,9 +18,6 @@
     "framework",
     "express"
   ],
-  "bin": {
-    "surf": "./bin/surf"
-  },
   "scripts": {
     "test": "_mocha test/specs"
   },
