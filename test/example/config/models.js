@@ -8,7 +8,7 @@
 
 module.exports = {
   connection: {
-    database: 'test_surf',
+    database: 'test_spiral',
     user: process.env.USER,
     password: ''
   },

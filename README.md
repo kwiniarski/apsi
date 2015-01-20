@@ -15,13 +15,13 @@ This software is under development. It's not ready for use yet. Moreover it uses
 ## Installation
 
 ```
-npm install surfjs --save
+npm install spiral --save
 ```
 
 ## Testing
 
 Before you can run tests make sure you have `devDependencies` installed. Also you will
-need working MySQL database with `test_surf` database ([more on that here](docs/test.md)).
+need working MySQL database with `test_spiral` database ([more on that here](docs/test.md)).
 To run test suite just use:
 
 ```

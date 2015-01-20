@@ -7,7 +7,7 @@
  * and all extending happens. Load order:
  * - command line arguments
  * - env variables
- * - .surfrc file
+ * - .spiralrc file
  *
  * rc lib handles env and .rc file. Command line arguments are passed
  * from lib/core/cmd.js using global object.
@@ -22,7 +22,7 @@ if (!global.args) {
 var rc = require('rc')
   , join = require('path').join
   , config = {
-      SURF_DIR: __dirname,
+      SPIRAL_DIR: __dirname,
       BASE_DIR: global.args.BASE_DIR || process.cwd(),
       PORT: global.args.PORT || 3000
     }

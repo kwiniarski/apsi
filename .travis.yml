@@ -13,4 +13,4 @@ script: grunt travis
 
 before_script:
   # Setup database to test
-  - mysql -e "create database test_surf;"
+  - mysql -e "create database test_spiral;"
