@@ -6,13 +6,13 @@
 
 'use strict';
 
-var surf = require('../../../../lib/server');
+var spiral = require('../../../../lib/server');
 var RequestError = require('../../../../lib/errors').RequestError;
 var _ = require('lodash');
 
 module.exports = {
   find: function (req, res, next) {
-    surf.models.users.find({
+    spiral.models.users.find({
       where: {
         email: req.params[0]
       }
@@ -27,20 +27,20 @@ module.exports = {
     });
   },
   listAvatarImages: function (req, res) {
-    surf.models.users.findAll({
+    spiral.models.users.findAll({
       attributes: ['avatar']
     }).then(res.ok);
   },
   addAvatarImage: function (req, res) {
     var id = req.body.id;
-    surf.models.users.update({
+    spiral.models.users.update({
       avatar: req.body.image
     }, {
       where: {
         id: id
       }
     }).then(function(){
-      return surf.models.users.find(id);
+      return spiral.models.users.find(id);
     }).then(res.ok);
   }
 };

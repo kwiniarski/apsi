@@ -4,8 +4,8 @@
  * @license MIT
  *
  * Middleware witch extends response object with additional properties to handle response by unifying its format.
- * In general Surf API will respond only if client accepts "application/json" format. Otherwise 406 status will
- * be returned with empty response. Other statuses are handled by Surf blueprints so there should be no need to
+ * In general Spiral API will respond only if client accepts "application/json" format. Otherwise 406 status will
+ * be returned with empty response. Other statuses are handled by Spiral blueprints so there should be no need to
  * think of them. However if you would like to trigger any of those errors manually you should require errors
  * module.
  *

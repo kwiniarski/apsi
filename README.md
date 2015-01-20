@@ -1,9 +1,9 @@
-[![Build Status](https://img.shields.io/travis/kwiniarski/surf.svg?style=flat-square)](https://travis-ci.org/kwiniarski/surf)
-[![Test Coverage](https://img.shields.io/codeclimate/coverage/github/kwiniarski/surf.svg?style=flat-square)](https://codeclimate.com/github/kwiniarski/surf)
-[![Code Climate](https://img.shields.io/codeclimate/github/kwiniarski/surf.svg?style=flat-square)](https://codeclimate.com/github/kwiniarski/surf)
-[![Gemnasium](https://img.shields.io/gemnasium/kwiniarski/surf.svg?style=flat-square)](https://gemnasium.com/kwiniarski/surf)
+[![Build Status](https://img.shields.io/travis/kwiniarski/spiral.svg?style=flat-square)](https://travis-ci.org/kwiniarski/spiral)
+[![Test Coverage](https://img.shields.io/codeclimate/coverage/github/kwiniarski/spiral.svg?style=flat-square)](https://codeclimate.com/github/kwiniarski/spiral)
+[![Code Climate](https://img.shields.io/codeclimate/github/kwiniarski/spiral.svg?style=flat-square)](https://codeclimate.com/github/kwiniarski/spiral)
+[![Gemnasium](https://img.shields.io/gemnasium/kwiniarski/spiral.svg?style=flat-square)](https://gemnasium.com/kwiniarski/spiral)
 
-# Surf
+# Spiral
 
 Simple RESTful API framework for Node.js build on the top of Express.
 

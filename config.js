@@ -44,4 +44,4 @@ for (var key in directories) {
   config[key] = join(config.BASE_DIR, directories[key]);
 }
 
-module.exports = rc('surf', config);
+module.exports = rc('spiral', config);
