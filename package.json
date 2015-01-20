@@ -1,6 +1,6 @@
 {
   "name": "spiral",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Simple RESTful API framework for Node.js build on the top of Express",
   "license": "MIT",
   "author": "Krzysztof Winiarski <winiarski.krzysztof@gmail.com>",
@@ -21,6 +21,7 @@
   "scripts": {
     "test": "_mocha test/specs"
   },
+  "main": "lib/server",
   "files": [
     "bin",
     "lib",
