@@ -1,8 +1,15 @@
 module.exports = function (grunt) {
   'use strict';
 
+  function readCodeclimateTokenFile() {
+    var filename = './codeclimate.txt';
+    if (grunt.file.exists(filename)) {
+      return grunt.file.read('codeclimate.txt', { encoding: 'utf8' }).trim();
+    }
+  }
+
   var CODECLIMATE_REPO_TOKEN = process.env.CODECLIMATE_REPO_TOKEN
-    || grunt.file.read('codeclimate.txt', { encoding: 'utf8' }).trim();
+    || readCodeclimateTokenFile();
 
   grunt.initConfig({
 
