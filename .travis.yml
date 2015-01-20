@@ -1,16 +1,17 @@
 language: node_js
-
 node_js:
-  - "0.10"
-
+- '0.10'
 install:
-  # Install package dependencies
-  - npm install
-  # Additional npm stuff that needs to be global
-  - npm install -g grunt-cli coffee-script
-
+- npm install
+- npm install -g grunt-cli coffee-script
 script: grunt travis
-
 before_script:
-  # Setup database to test
-  - mysql -e "create database test_spiral;"
+- mysql -e "create database test_spiral;"
+deploy:
+  provider: npm
+  email: krzysiek@codilogy.com
+  api_key:
+    secure: DY5jPrmjzeAGgmv5rk2OlVhQjIptJaCvyfcfTxQzp4y1wE6j2zmSG4xkkHIcrsonRyyW3RRI/IuBZwdwex5OfuJ2qOd3UCJYTr+lVg3QubRBj4XaxloQVoMuYMIclngYZ5Kvnx41NwT1KCu7pTEZdn0VBOKgQRZMafSKBDyIhZU=
+  on:
+    tags: true
+    repo: kwiniarski/spiral

@@ -3,7 +3,7 @@
   "version": "0.1.4",
   "description": "Simple RESTful API framework for Node.js build on the top of Express",
   "license": "MIT",
-  "author": "Krzysztof Winiarski <winiarski.krzysztof@gmail.com>",
+  "author": "Krzysztof Winiarski <krzysiek@codilogy.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/kwiniarski/spiral"
