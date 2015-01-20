@@ -23,7 +23,7 @@ utils.addMethod(chai.Assertion.prototype, 'memberFunctions', function (members) 
 
 chai.use(require('sinon-chai'));
 chai.use(require('chai-http'));
-chai.request.addPromises(require('bluebird').Promise);
+chai.request.addPromises(require('p'));
 chai.config.includeStack = true;
 
 global.expect = chai.expect;
