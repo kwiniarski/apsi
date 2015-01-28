@@ -20,7 +20,7 @@ describe 'Policies provider', ->
 
   describe 'module object', ->
     it 'should provide list of polices for all known controllers and their actions', ->
-      expect(policies).to.have.keys ['products', 'users']
+      expect(policies).to.have.keys ['products', 'users', 'restricted']
 
   describe 'Policy object', ->
     it 'should provide list of configured policies', ->
@@ -31,6 +31,10 @@ describe 'Policies provider', ->
       expect(policies.users._all).to.have.memberFunctions [isAuthenticated, asAdmin]
       expect(policies.products._all).to.have.memberFunctions [isTrusted]
       expect(policies.products.create).to.have.memberFunctions [isAuthenticated, asUser]
+
+  describe 'restricting access to the model', ->
+    it 'should set false value instead array on wildcard policy configuration', ->
+      expect(policies.restricted._all).to.be.equal false
 
   describe 'action policies getter', ->
     it 'should return policies for controller\'s action if it was configured', ->

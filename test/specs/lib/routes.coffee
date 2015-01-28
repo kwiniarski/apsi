@@ -129,5 +129,8 @@ describe 'Route provider', ->
         expect(res).to.be.json.and.have.status 405
         expect(res.body).to.have.deep.property 'name', 'Method Not Allowed'
         done()
-
-
+    it 'should return 404 Not Found for models restricted by policy', (done) ->
+      agent.get('/restricted').end (err, res) ->
+        expect(res).to.be.json.and.have.status 404
+        expect(res.body).to.have.deep.property 'name', 'Not Found'
+        done()
