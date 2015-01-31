@@ -13,7 +13,7 @@ var express = require('express')
   , server = module.exports
   , application = express();
 
-
+server.routes = require('./lib/routes');
 server.services = require('./services');
 server.models = require('./models');
 server.application = application;
