@@ -38,7 +38,7 @@ mockery.registerSubstitute('../config', '../test/fixtures/config');
 mockery.registerSubstitute('./support', '../test/mocks/support');
 
 global.createServerAndSyncDatabase = function (done) {
-  var server = require('../lib/server')
+  var server = require('../index')
     , models = server.models;
 
   models.sequelize.sync({

@@ -10,7 +10,7 @@ describe 'Service provider', ->
       warnOnUnregistered: false
       useCleanCache: true
 
-    services = require '../../../lib/services'
+    services = require '../../../services/index'
 
   after ->
     mockery.disable()

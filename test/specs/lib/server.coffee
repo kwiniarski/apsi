@@ -12,7 +12,7 @@ describe 'Server core', ->
       warnOnUnregistered: false
       useCleanCache: true
 
-    server = require '../../../lib/server'
+    server = require '../../../index'
     server.hooks.afterStart = sinon.spy(server.hooks.afterStart)
 
     server.start done

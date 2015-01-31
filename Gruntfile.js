@@ -22,13 +22,17 @@ module.exports = function (grunt) {
 
     testDir: './test',
     destDir: './.grunt',
-    srcDir: './{lib,middleware}',
+    srcDir: './{lib,middleware,services,models}',
 
     clean: {
       build: '<%= destDir %>'
     },
 
     copy: {
+      library: {
+        src: ['./{config,index}.js', '<%= srcDir %>/**'],
+        dest: '<%= destDir %>/'
+      },
       testFiles: {
         src: '<%= testDir %>/**',
         dest: '<%= destDir %>/'
@@ -44,10 +48,9 @@ module.exports = function (grunt) {
     },
 
     blanket: {
-      srcFiles: {
+      library: {
         files: {
-          '<%= destDir %>/lib/': ['./lib'],
-          '<%= destDir %>/middleware/': ['./middleware']
+          '<%= destDir %>/': ['<%= destDir %>']
         }
       }
     },
@@ -97,7 +100,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-codeclimate');
 
-  grunt.registerTask('build', ['clean', 'copy', 'blanket']);
+  grunt.registerTask('build', ['clean', 'copy:library', 'blanket', 'copy:testFiles']);
   grunt.registerTask('test', ['build', 'mochaTest:test', 'clean']);
   grunt.registerTask('coverage', ['build', 'mochaTest:coverageHtml']);
   grunt.registerTask('travis', ['build', 'mochaTest:coverageLcov', 'codeclimate', 'clean']);

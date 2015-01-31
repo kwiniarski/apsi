@@ -21,7 +21,7 @@
   "scripts": {
     "test": "_mocha test/specs"
   },
-  "main": "lib/server",
+  "main": "index",
   "files": [
     "bin",
     "lib",
