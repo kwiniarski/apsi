@@ -11,20 +11,18 @@ var eventsLog = require('../lib/log/events')
 
 module.exports = function errorsHandler(err, req, res, next) {
 
-  var status = err.status || 500
-    , error = {
-        status: status,
-        code: err.code,
-        message: err.message,
-        stack: err.stack
-      };
+  if (!err.status) {
+    err.status = 500;
+  }
 
-  res.status(status);
-  res.json(env === 'development' ? error : {
-    status: error.status,
-    code: error.code,
-    message: error.message
-  });
+  // Log error
+  eventsLog.error(err.message, err);
 
-  eventsLog.error(err.message, error);
+  // Print output
+  if (env === 'production') {
+    delete err.stack;
+  }
+
+  res.status(err.status).json(err);
+
 };
