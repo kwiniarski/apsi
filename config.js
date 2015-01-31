@@ -24,8 +24,9 @@ var rc = require('rc')
   , config = {
       SPIRAL_DIR: __dirname,
       BASE_DIR: global.args.BASE_DIR || process.cwd(),
-      PORT: global.args.PORT || 3000
-    }
+      PORT: global.args.PORT || 3000,
+      ENV: process.env.NODE_ENV
+  }
   , directories = {
       MODELS_DIR: 'api/models',
       MODELS_CONFIG: 'config/models',
