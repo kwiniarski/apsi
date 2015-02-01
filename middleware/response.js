@@ -49,7 +49,7 @@ module.exports = function (req, res, next) {
     // 204 No Content
     noContent: {
       writable: true,
-      value: function deleted() {
+      value: function noContent() {
         return res
           .status(204)
           .end();
