@@ -1,6 +1,7 @@
 'use strict'
 
 sinon = require 'sinon'
+errors = require '../../../lib/errors'
 middleware = require '../../../middleware/response'
 
 res = null
@@ -59,3 +60,19 @@ describe 'response middleware', ->
 
       expect(res.status).to.have.been.calledWith 204
       expect(res.end).to.have.been.called
+
+  describe 'error method', ->
+
+    it 'should return request error with provided numeric code', ->
+      res.error(404);
+
+      expect(next).to.have.been.calledTwice
+      expect(next.secondCall).to.have.been.calledWithMatch sinon.match.instanceOf errors.RequestError
+      expect(next.secondCall.args[0]).to.have.property 'status', 404
+
+    it 'should return request error with provided error name', ->
+      res.error('NotFound');
+
+      expect(next).to.have.been.calledTwice
+      expect(next.secondCall).to.have.been.calledWithMatch sinon.match.instanceOf errors.RequestError
+      expect(next.secondCall.args[0]).to.have.property 'status', 404

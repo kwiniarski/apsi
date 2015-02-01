@@ -13,6 +13,9 @@
 
 'use strict';
 
+var errors = require('../lib/errors')
+  , RequestError = errors.RequestError;
+
 module.exports = function (req, res, next) {
 
   var finishedAt = null;
@@ -54,7 +57,20 @@ module.exports = function (req, res, next) {
           .status(204)
           .end();
       }
+    },
+
+    error: {
+      writable: true,
+      value: function error(code, message) {
+        if (typeof RequestError[code] === 'function') {
+          next(RequestError[code](message));
+        }
+        else {
+          next(new RequestError(code, message));
+        }
+      }
     }
+
   });
 
   next();
