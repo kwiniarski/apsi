@@ -6,7 +6,7 @@
 
 'use strict';
 
-var spiral = require('../../../../lib/server');
+var spiral = require('../../../../index');
 var RequestError = require('../../../../lib/errors').RequestError;
 var _ = require('lodash');
 

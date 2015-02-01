@@ -9,6 +9,10 @@ describe 'errors-handler middleware', ->
   middleware = null
 
   beforeEach ->
+    mockery.enable
+      warnOnUnregistered: false
+      useCleanCache: true
+
     req = require('../../mocks/express-request')()
     res = require('../../mocks/express-response')()
 
@@ -16,6 +20,8 @@ describe 'errors-handler middleware', ->
     res.json = sinon.spy res.json
 
     middleware = require '../../../middleware/errors-handler'
+
+  afterEach mockery.disable
 
   describe 'status code support', ->
     it 'should set status code from error object', ->

@@ -1,12 +1,12 @@
 'use strict';
 
-var support = require('./support')
+var support = require('./../lib/support')
   , path = require('path')
   , lodash = require('lodash')
   , Sequelize = require('sequelize')
   , CONFIG = require('../config')
   , config = require(CONFIG.MODELS_CONFIG)
-  , eventsLog = require('./log/events')
+  , eventsLog = require('./../lib/log/events')
   , db = {}
 
   , options = lodash.extend({

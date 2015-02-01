@@ -7,7 +7,7 @@
 'use strict';
 
 var path = require('path')
-  , support = require('./support')
+  , support = require('./../lib/support')
   , CONFIG = require('../config')
   , config = support.listFiles(CONFIG.SERVICES_CONFIG_DIR)
   , registry = support.listFiles(CONFIG.SERVICES_DIR)
