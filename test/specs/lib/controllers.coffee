@@ -35,6 +35,6 @@ describe 'Controllers provider', ->
   describe 'replaced actions', ->
     it 'should contain reference to blueprint routes with custom method attached', ->
       expect(controllers._replaced.users.find.fn).to.be.a 'function'
-      expect(controllers._replaced.users.find.route).to.eql /^\/(\d+)$/
+      expect(controllers._replaced.users.find.route).to.eql /^\/([0-9a-z]+)$/i
 
 
