@@ -65,8 +65,25 @@ module.exports = function (req, res, next) {
         if (typeof RequestError[code] === 'function') {
           next(RequestError[code](message));
         }
-        else {
+        else if (typeof code === 'number') {
           next(new RequestError(code, message));
+        }
+        else {
+          next(RequestError.BadRequest(code));
+        }
+      }
+    },
+
+    okOrNotFound: {
+      writable: true,
+      value: function okOrNotFound(data) {
+        if (!data) {
+          next(RequestError.NotFound(data));
+        }
+        else {
+          return res
+            .status(200)
+            .json(data);
         }
       }
     }

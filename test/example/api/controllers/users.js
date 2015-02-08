@@ -12,18 +12,10 @@ var _ = require('lodash');
 
 module.exports = {
   find: function (req, res, next) {
-    spiral.models.users.find({
+    return spiral.models.users.find({
       where: {
         email: req.params[0]
       }
-    }).done(function (err, data) {
-      if (err) {
-        return next(RequestError.BadRequest(err));
-      }
-      if (_.isEmpty(data)) {
-        return next(RequestError.NotFound());
-      }
-      return res.ok(data);
     });
   },
   listAvatarImages: function (req, res) {
