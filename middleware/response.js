@@ -74,17 +74,21 @@ module.exports = function (req, res, next) {
       }
     },
 
+    createdOrNoContent: {
+      writable: true,
+      value: function createdOrNoContent(locationUrl) {
+        return locationUrl
+          ? res.location(locationUrl).status(201).end()
+          : res.status(204).end();
+      }
+    },
+
     okOrNotFound: {
       writable: true,
       value: function okOrNotFound(data) {
-        if (!data) {
-          next(RequestError.NotFound(data));
-        }
-        else {
-          return res
-            .status(200)
-            .json(data);
-        }
+        return data
+          ? res.status(200).json(data)
+          : next(RequestError.NotFound());
       }
     }
 

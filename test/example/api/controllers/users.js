@@ -19,9 +19,9 @@ module.exports = {
     });
   },
   listAvatarImages: function (req, res) {
-    spiral.models.users.findAll({
+    return spiral.models.users.findAll({
       attributes: ['avatar']
-    }).then(res.ok);
+    });
   },
   addAvatarImage: function (req, res) {
     var id = req.body.id;
