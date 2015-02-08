@@ -36,7 +36,7 @@ support
 
 for (var modelName in db) {
   if ('associate' in db[modelName]) {
-    db[modelName].associate(db);
+    db[modelName].associate.call(db[modelName], db);
     eventsLog.debug('model associated', modelName);
   }
 }
