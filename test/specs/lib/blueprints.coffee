@@ -3,7 +3,7 @@
 sinon = require 'sinon'
 blueprints = require '../../../lib/blueprints'
 
-describe.only 'Blueprints provider', ->
+describe 'Blueprints provider', ->
 
   blueprint = null
   model = null
@@ -56,15 +56,22 @@ describe.only 'Blueprints provider', ->
   describe 'update request handler', ->
     it 'should be configured as a PUT method', ->
       expect(blueprint.update.methods).to.have.members ['put']
+    it 'should be able to update single query with given id'
+    it 'should be able to update multiple resources which meet given criteria'
 
   describe 'find request handler', ->
     it 'should be configured as a GET method', ->
       expect(blueprint.find.methods).to.have.members ['get']
+    it 'should be able to retrive single resource with given id'
+    it 'should be able to retrive multiple resources which meet given criteria'
 
-  describe 'findAll request handler', ->
-    it 'should be configured as a GET method', ->
-      expect(blueprint.findAll.methods).to.have.members ['get']
+#  describe 'findAll request handler', ->
+#    it 'should be configured as a GET method', ->
+#      expect(blueprint.findAll.methods).to.have.members ['get']
+
 
   describe 'destroy request handler', ->
-    it 'should be configured as a GET method', ->
+    it 'should be configured as a DELETE method', ->
       expect(blueprint.destroy.methods).to.have.members ['delete']
+    it 'should be able to destroy single resource with given id'
+    it 'should be able to destroy multiple resources which meet given criteria'
