@@ -16,8 +16,10 @@ describe 'Blueprints provider', ->
       then: sinon.spy()
       bulkCreate: sinon.spy -> model
       create: sinon.spy -> model
+      update: sinon.spy -> model
       upsert: sinon.spy -> model
       find: sinon.spy -> model
+      findOne: sinon.spy -> model
       findAll: sinon.spy -> model
       destroy: sinon.spy -> model
 
@@ -37,6 +39,7 @@ describe 'Blueprints provider', ->
 #    res.noContent = sinon.spy res.noContent
 
   describe 'create request handler', ->
+
     it 'should be configured as a POST method', ->
       expect(blueprint.create.methods).to.have.members ['post']
 
@@ -54,16 +57,38 @@ describe 'Blueprints provider', ->
       expect(model.then.firstCall.args[0]({id:1})).to.be.equal '/resources/1';
 
   describe 'update request handler', ->
+
     it 'should be configured as a PUT method', ->
       expect(blueprint.update.methods).to.have.members ['put']
-    it 'should be able to update single query with given id'
-    it 'should be able to update multiple resources which meet given criteria'
+
+    it 'should be able to update single query with given id', ->
+      req.params.id = 1;
+      req.body = {}
+      blueprint.update.fn req
+      expect(model.upsert).to.have.been.calledWith id: 1
+
+    it 'should be able to update multiple resources which meet given criteria', ->
+      req.query =
+        active: 1
+      req.body = {}
+      blueprint.update.fn req
+      expect(model.update).to.have.been.calledWith {}, where: active: 1
 
   describe 'find request handler', ->
+
     it 'should be configured as a GET method', ->
       expect(blueprint.find.methods).to.have.members ['get']
-    it 'should be able to retrive single resource with given id'
-    it 'should be able to retrive multiple resources which meet given criteria'
+
+    it 'should be able to retrieve single resource with given id', ->
+      req.params.id = 1;
+      blueprint.find.fn req
+      expect(model.findOne).to.have.been.calledWith 1
+
+    it 'should be able to retrieve multiple resources which meet given criteria', ->
+      req.query =
+        active: 1
+      blueprint.find.fn req
+      expect(model.findAll).to.have.been.calledWith where: active: 1
 
 #  describe 'findAll request handler', ->
 #    it 'should be configured as a GET method', ->
