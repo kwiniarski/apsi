@@ -8,7 +8,7 @@
 
 module.exports = {
   users: {
-    find: {
+    read: {
       route: /^\/([\w\.]+@[\w\.]+)$/i
     },
     addAvatarImage: {

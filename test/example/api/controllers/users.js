@@ -11,7 +11,7 @@ var RequestError = require('../../../../lib/errors').RequestError;
 var _ = require('lodash');
 
 module.exports = {
-  find: function (req, res, next) {
+  read: function (req, res, next) {
     return spiral.models.users.find({
       where: {
         email: req.params[0]
