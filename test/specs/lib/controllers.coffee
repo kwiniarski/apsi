@@ -22,7 +22,7 @@ describe 'Controllers provider', ->
   describe 'controller object', ->
     it 'should contain blueprint methods with custom methods', ->
       expect(controllers.users).to.have.keys [
-        'find', 'findAll', 'create', 'update', 'destroy',
+        'find', 'create', 'update', 'destroy',
         'listAvatarImages', 'addAvatarImage'
       ]
     it 'blueprint overwritten actions should call user custom action', ->
@@ -35,6 +35,6 @@ describe 'Controllers provider', ->
   describe 'replaced actions', ->
     it 'should contain reference to blueprint routes with custom method attached', ->
       expect(controllers._replaced.users.find.fn).to.be.a 'function'
-      expect(controllers._replaced.users.find.route).to.eql /^\/(\d+)$/
+      expect(controllers._replaced.users.find.route).to.eql ['/', '/:id([a-z0-9]+)']
 
 

@@ -9,14 +9,17 @@ describe 'Blueprints provider', ->
   model = null
   req = null
   res = null
-  next = null
+#  next = null
 
   beforeEach ->
     model =
-      done: sinon.stub()
+      then: sinon.spy()
+      bulkCreate: sinon.spy -> model
       create: sinon.spy -> model
+      update: sinon.spy -> model
       upsert: sinon.spy -> model
       find: sinon.spy -> model
+      findOne: sinon.spy -> model
       findAll: sinon.spy -> model
       destroy: sinon.spy -> model
 
@@ -24,140 +27,76 @@ describe 'Blueprints provider', ->
 
     req = require('../../mocks/express-request')()
     res = require('../../mocks/express-response')()
-    next = sinon.spy ->
+#    next = sinon.spy ->
 
     require('../../../middleware/request') req, res, ->
     require('../../../middleware/response') req, res, ->
 
-    req.params = [1]
+#    req.params = [1]
 
-    res.created = sinon.spy res.created
-    res.ok = sinon.spy res.ok
-    res.noContent = sinon.spy res.noContent
+#    res.created = sinon.spy res.created
+#    res.ok = sinon.spy res.ok
+#    res.noContent = sinon.spy res.noContent
 
   describe 'create request handler', ->
+
     it 'should be configured as a POST method', ->
       expect(blueprint.create.methods).to.have.members ['post']
 
-    it 'should finalize valid request', ->
-      model.done.yields null, { id: 1 }
-      blueprint.create.fn(req, res, next)
+    it 'should bulk create records when data is send as an array', ->
+      req.body = [];
+      blueprint.create.fn req
+      expect(model.bulkCreate).to.have.been.calledWith [];
 
-      expect(model.create).to.have.been.calledOnce
-      expect(next).to.have.been.not.called
-      expect(res.created).to.have.been.calledWith '/resources/1'
+    it 'should create record when data is send as an object', ->
+      req.body = {};
+      blueprint.create.fn req
 
-    it 'should fail request on error', ->
-      model.done.yields 'error'
-      blueprint.create.fn(req, res, next)
-
-      expect(model.create).to.have.been.calledOnce
-      expect(next).to.have.been.calledOnce
-      expect(res.created).to.have.been.not.called
+      expect(model.create).to.have.been.calledWith {};
+      expect(model.then).to.have.been.calledOnce;
+      expect(model.then.firstCall.args[0]({id:1})).to.be.equal '/resources/1';
 
   describe 'update request handler', ->
+
     it 'should be configured as a PUT method', ->
       expect(blueprint.update.methods).to.have.members ['put']
 
-    it 'should finalize valid request with unexisting record', ->
-      model.done.yields null, true
-      blueprint.update.fn(req, res, next)
+    it 'should be able to update single query with given id', ->
+      req.params.id = 1;
+      req.body = {}
+      blueprint.update.fn req
+      expect(model.upsert).to.have.been.calledWith id: 1
 
-      expect(model.upsert).to.have.been.calledOnce
-      expect(next).to.have.been.not.called
-      expect(res.created).to.have.been.calledWith '/resources/1'
-      expect(res.noContent).to.have.been.not.called
-
-    it 'should finalize valid request with existing record', ->
-      model.done.yields null, false
-      blueprint.update.fn(req, res, next)
-
-      expect(model.upsert).to.have.been.calledOnce
-      expect(next).to.have.been.not.called
-      expect(res.created).to.have.been.not.called
-      expect(res.noContent).to.have.been.calledOnce
-
-    it 'should fail request on error', ->
-      model.done.yields 'error'
-      blueprint.update.fn(req, res, next)
-
-      expect(model.upsert).to.have.been.calledOnce
-      expect(next).to.have.been.calledOnce
-      expect(res.created).to.have.been.not.called
-      expect(res.noContent).to.have.been.not.called
+    it 'should be able to update multiple resources which meet given criteria', ->
+      req.query =
+        active: 1
+      req.body = {}
+      blueprint.update.fn req
+      expect(model.update).to.have.been.calledWith {}, where: active: 1
 
   describe 'find request handler', ->
+
     it 'should be configured as a GET method', ->
       expect(blueprint.find.methods).to.have.members ['get']
 
-    it 'should finalize valid request with data', ->
-      model.done.yields null, true
-      blueprint.find.fn(req, res, next)
+    it 'should be able to retrieve single resource with given id', ->
+      req.params.id = 1;
+      blueprint.find.fn req
+      expect(model.findOne).to.have.been.calledWith 1
 
-      expect(model.find).to.have.been.calledWith 1
-      expect(next).to.have.been.not.called
-      expect(res.ok).to.have.been.calledWith true
+    it 'should be able to retrieve multiple resources which meet given criteria', ->
+      req.query =
+        active: 1
+      blueprint.find.fn req
+      expect(model.findAll).to.have.been.calledWith where: active: 1
 
-    it 'should finalize valid request without data', ->
-      model.done.yields null, null
-      blueprint.find.fn(req, res, next)
+#  describe 'findAll request handler', ->
+#    it 'should be configured as a GET method', ->
+#      expect(blueprint.findAll.methods).to.have.members ['get']
 
-      expect(model.find).to.have.been.calledWith 1
-      expect(next).to.have.been.calledOnce
-      expect(res.created).to.have.been.not.called
-
-    it 'should fail request on error', ->
-      model.done.yields 'error'
-      blueprint.find.fn(req, res, next)
-
-      expect(model.find).to.have.been.calledWith 1
-      expect(next).to.have.been.calledOnce
-      expect(res.created).to.have.been.not.called
-
-  describe 'findAll request handler', ->
-    it 'should be configured as a GET method', ->
-      expect(blueprint.findAll.methods).to.have.members ['get']
-
-    it 'should finalize valid request with data', ->
-      model.done.yields null, true
-      blueprint.findAll.fn(req, res, next)
-
-      expect(model.findAll).to.have.been.calledOnce
-      expect(next).to.have.been.not.called
-      expect(res.ok).to.have.been.calledWith true
-
-    it 'should finalize valid request without data', ->
-      model.done.yields null, null
-      blueprint.findAll.fn(req, res, next)
-
-      expect(model.findAll).to.have.been.calledOnce
-      expect(next).to.have.been.calledOnce
-      expect(res.created).to.have.been.not.called
-
-    it 'should fail request on error', ->
-      model.done.yields 'error'
-      blueprint.findAll.fn(req, res, next)
-
-      expect(model.findAll).to.have.been.calledOnce
-      expect(next).to.have.been.calledOnce
-      expect(res.created).to.have.been.not.called
 
   describe 'destroy request handler', ->
-    it 'should be configured as a GET method', ->
+    it 'should be configured as a DELETE method', ->
       expect(blueprint.destroy.methods).to.have.members ['delete']
-
-    it 'should finalize valid request with data', ->
-      model.done.yields null
-      blueprint.destroy.fn(req, res, next)
-
-      expect(model.destroy).to.have.been.calledOnce
-      expect(next).to.have.been.not.called
-      expect(res.noContent).to.have.been.calledOnce
-
-    it 'should fail request on error', ->
-      model.done.yields 'error'
-      blueprint.destroy.fn(req, res, next)
-
-      expect(model.destroy).to.have.been.calledOnce
-      expect(next).to.have.been.calledOnce
-      expect(res.noContent).to.have.been.not.called
+    it 'should be able to destroy single resource with given id'
+    it 'should be able to destroy multiple resources which meet given criteria'
