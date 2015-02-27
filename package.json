@@ -23,10 +23,12 @@
   },
   "main": "index",
   "files": [
-    "bin",
     "lib",
     "middleware",
+    "models",
+    "services",
     "config.js",
+    "index.js",
     "LICENSE.txt"
   ],
   "dependencies": {
