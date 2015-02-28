@@ -27,6 +27,8 @@ describe 'Policies provider', ->
       expect(policies.products).to.have.keys ['create']
 
   describe 'top level wildcard configuration (*)', ->
+    it 'should be available on the module object', ->
+      expect(policies._all._all).to.have.memberFunctions [isTrusted]
     it 'should be used for all actions in all controllers unless overwritten by controller level policies', ->
       expect(policies.users._all).to.have.memberFunctions [isAuthenticated, asAdmin]
       expect(policies.products._all).to.have.memberFunctions [isTrusted]
