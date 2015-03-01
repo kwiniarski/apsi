@@ -14,7 +14,7 @@ describe 'Controllers provider', ->
   afterEach mockery.disable
 
   it 'should return list of configured controllers', ->
-    expect(controllers).to.have.keys ['products', 'users', 'roles', 'restricted']
+    expect(controllers).to.have.keys ['products', 'users', 'roles', 'restricted', 'allowed']
 
   it 'should return list of replaced blueprint actions', ->
     expect(controllers).to.have.property '_replaced'
