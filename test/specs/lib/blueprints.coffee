@@ -9,7 +9,6 @@ describe 'Blueprints provider', ->
   model = null
   req = null
   res = null
-#  next = null
 
   beforeEach ->
     model =
@@ -27,16 +26,9 @@ describe 'Blueprints provider', ->
 
     req = require('../../mocks/express-request')()
     res = require('../../mocks/express-response')()
-#    next = sinon.spy ->
 
     require('../../../middleware/request') req, res, ->
     require('../../../middleware/response') req, res, ->
-
-#    req.params = [1]
-
-#    res.created = sinon.spy res.created
-#    res.ok = sinon.spy res.ok
-#    res.noContent = sinon.spy res.noContent
 
   describe 'create request handler', ->
 
@@ -90,13 +82,17 @@ describe 'Blueprints provider', ->
       blueprint.find.fn req
       expect(model.findAll).to.have.been.calledWith where: active: 1
 
-#  describe 'findAll request handler', ->
-#    it 'should be configured as a GET method', ->
-#      expect(blueprint.findAll.methods).to.have.members ['get']
-
 
   describe 'destroy request handler', ->
     it 'should be configured as a DELETE method', ->
       expect(blueprint.destroy.methods).to.have.members ['delete']
-    it 'should be able to destroy single resource with given id'
-    it 'should be able to destroy multiple resources which meet given criteria'
+
+    it 'should be able to destroy single resource with given id', ->
+      req.params.id = 1;
+      blueprint.destroy.fn req
+      expect(model.destroy).to.have.been.calledWith where: id: 1
+
+    it 'should be able to destroy multiple resources which meet given criteria', ->
+      req.params.id = 1;
+      blueprint.destroy.fn req
+      expect(model.destroy).to.have.been.calledWith where: id: 1
