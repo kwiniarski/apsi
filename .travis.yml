@@ -14,6 +14,7 @@ deploy:
   api_key:
     secure: DY5jPrmjzeAGgmv5rk2OlVhQjIptJaCvyfcfTxQzp4y1wE6j2zmSG4xkkHIcrsonRyyW3RRI/IuBZwdwex5OfuJ2qOd3UCJYTr+lVg3QubRBj4XaxloQVoMuYMIclngYZ5Kvnx41NwT1KCu7pTEZdn0VBOKgQRZMafSKBDyIhZU=
   on:
+    node: 0.12
     tags: true
     branch: master
     repo: kwiniarski/spiral
