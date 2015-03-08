@@ -6,12 +6,16 @@
 
 'use strict';
 
-var express = require('express')
+var httpPromise = require('http-promise')
+  , express = require('express')
   , eventsLog = require('./lib/log/events')
   , middleware = require('./middleware/index')
   , config = require('./config')
   , server = module.exports
+  , instance = null
   , application = express();
+
+application.use(middleware);
 
 server.routes = require('./lib/routes');
 server.services = require('./services');
@@ -19,28 +23,40 @@ server.models = require('./models');
 server.application = application;
 server.log = eventsLog;
 
-server.instance = null;
-
 server.hooks = {
-  afterStart: function () {
+  afterStart: function (server) {
 
-    var host = server.instance.address().address
-      , port = server.instance.address().port;
+    var host = server.address().address
+      , port = server.address().port;
 
     eventsLog.info('server listening at http://%s:%s', host, port);
     eventsLog.info('env %s', config.ENV);
+  },
+  afterStop: function (server) {
+    eventsLog.info('server stopped');
   }
 };
 
-server.start = function start(done) {
-  server.application.use(middleware);
-  server.instance = application.listen(config.PORT, function () {
-    server.hooks.afterStart();
-    if (done && typeof done === 'function') {
-      done();
-    }
-  });
+server.start = function start() {
+  var srv = httpPromise.createServerAsync(application)
+    .catch(function (e) {
+      eventsLog.error('cannot create application: ' + (e.stack || e.message));
+    });
+
+  instance = srv.listen(config.PORT)
+    .tap(server.hooks.afterStart)
+    .catch(function (e) {
+      eventsLog.error('cannot start application: ' + (e.stack || e.message));
+    });
+
+  return instance;
 };
 
-Object.seal(server.hooks);
-
+server.stop = function stop() {
+  return instance
+    .close()
+    .tap(server.hooks.afterStop)
+    .catch(function (e) {
+      eventsLog.error('cannot stop application: ' + (e.stack || e.message));
+    });
+};

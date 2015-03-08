@@ -5,18 +5,20 @@ models = null
 
 describe 'Models provider', ->
 
-  before (done) ->
+  before ->
     mockery.enable
       warnOnUnregistered: false
       useCleanCache: true
 
-    server = createServerAndSyncDatabase done
+    server = require '../../../index'
     models = server.models
 
-  after (done) ->
+    syncDatabase()
+      .then server.start
+
+  after ->
     mockery.disable()
-    server.instance.on 'close', done
-    server.instance.close()
+    server.stop();
 
   it 'should return defined models', ->
     expect(models).to.have.property 'products'

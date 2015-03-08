@@ -1,26 +1,19 @@
 'use strict'
 
 sinon = require 'sinon'
-server = null
 
 describe 'Server core', ->
 
   server = null
 
-  before (done) ->
+  before ->
     mockery.enable
       warnOnUnregistered: false
       useCleanCache: true
-
     server = require '../../../index'
-    server.hooks.afterStart = sinon.spy(server.hooks.afterStart)
 
-    server.start done
-
-  after (done) ->
+  after ->
     mockery.disable()
-    server.instance.on 'close', done
-    server.instance.close()
 
   it 'should expose services when required', ->
     expect(server).to.have.property 'services'
@@ -38,6 +31,12 @@ describe 'Server core', ->
     expect(server).to.have.property 'application'
 
   it 'should start application on selected port', ->
-    expect(server.hooks.afterStart).to.have.been.calledOnce
+    server.hooks.afterStart = sinon.spy server.hooks.afterStart
+    server.hooks.afterStop = sinon.spy server.hooks.afterStop
+    server
+      .start()
+      .tap -> expect(server.hooks.afterStart).to.have.been.calledOnce
+      .then server.stop
+      .tap -> expect(server.hooks.afterStop).to.have.been.calledOnce
 
 

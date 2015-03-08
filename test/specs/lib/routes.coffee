@@ -11,18 +11,21 @@ isTrusted         = sinon.spy require '../../example/api/policies/is-trusted'
 
 describe 'Route provider', ->
 
-  before (done) ->
+  before ->
     mockery.enable
       warnOnUnregistered: false
       useCleanCache: true
 
-    server = createServerAndSyncDatabase done
-    agent = request server.application
+    server = require '../../../index'
 
-  after (done) ->
+    syncDatabase()
+      .then server.start
+      .then ->
+        agent = request server.application
+
+  after ->
     mockery.disable()
-    server.instance.on 'close', done
-    server.instance.close()
+    server.stop()
 
   describe 'mount CRUD routes for the resource model', ->
 

@@ -23,7 +23,7 @@ utils.addMethod(chai.Assertion.prototype, 'memberFunctions', function (members) 
 
 chai.use(require('sinon-chai'));
 chai.use(require('chai-http'));
-chai.request.addPromises(require('p'));
+chai.request.addPromises(require('bluebird'));
 chai.config.includeStack = true;
 
 global.expect = chai.expect;
@@ -37,11 +37,10 @@ mockery.registerSubstitute('../../config', '../../test/fixtures/config');
 mockery.registerSubstitute('../config', '../test/fixtures/config');
 mockery.registerSubstitute('./support', '../test/mocks/support');
 
-global.createServerAndSyncDatabase = function (done) {
-  var server = require('../index')
-    , models = server.models;
+function syncDatabase() {
+  var models = require('../models');
 
-  models.sequelize.sync({
+  return models.sequelize.sync({
     force: true
   }).then(function () {
     models.products.bulkCreate([
@@ -53,9 +52,8 @@ global.createServerAndSyncDatabase = function (done) {
       { name: 'John Brown', email: 'j.brown@gmail.com' },
       { name: 'Mark Down', email: 'mark.down@yahoo.com' }
     ]);
-  }).done(function () {
-    server.start(done);
   });
+}
 
-  return server;
-};
+global.syncDatabase = syncDatabase;
+
