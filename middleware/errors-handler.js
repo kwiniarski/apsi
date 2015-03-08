@@ -7,7 +7,8 @@
 'use strict';
 
 var eventsLog = require('../lib/log/events')
-  , env = require('../config').ENV;
+  , env = require('../config').ENV
+  , _ = require('lodash');
 
 module.exports = function errorsHandler(err, req, res, next) {
 
@@ -16,7 +17,12 @@ module.exports = function errorsHandler(err, req, res, next) {
   }
 
   // Log error
-  eventsLog.error(err.message, err);
+  eventsLog.error(err.message, {
+    error: err.stack || err.toString(),
+    request: _.pick(req, function (v) {
+      return _.isString(v) || _.isNumber(v) || _.isBoolean(v) || _.isDate(v) || _.isNull(v);
+    })
+  });
 
   // Print output
   if (env === 'production') {
