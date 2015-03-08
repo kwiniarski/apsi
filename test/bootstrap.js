@@ -21,6 +21,9 @@ utils.addMethod(chai.Assertion.prototype, 'memberFunctions', function (members) 
 });
 /* jshint +W030 */
 
+// TODO: (node) warning: possible EventEmitter memory leak detected.
+process.setMaxListeners(20);
+
 chai.use(require('sinon-chai'));
 chai.use(require('chai-http'));
 chai.request.addPromises(require('bluebird'));
