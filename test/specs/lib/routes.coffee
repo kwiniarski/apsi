@@ -119,7 +119,7 @@ describe 'Route provider', ->
       .end (err, res) ->
         expect(res).to.be.json.and.have.status 400
         expect(res.body).to.have.deep.property 'name', 'Bad Request'
-        expect(res.body).to.have.deep.property 'message', 'Validation error'
+        expect(res.body).to.have.deep.property 'message'
         expect(res.body).to.have.deep.property 'errors[0].message', 'Validation isEmail failed'
         done()
     it 'should return 404 Not Found for missing routes', (done) ->

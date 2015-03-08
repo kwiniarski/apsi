@@ -16,8 +16,6 @@ var path = require('path')
     };
 
 for (var i in fakePaths) {
-  //module.exports[i] = path.normalize(fakePaths[i]);
   module.exports[i] = path.resolve(__dirname, fakePaths[i]);
-  //module.exports[i] = fakePaths[i];
 }
-//console.log(module.exports);
+
