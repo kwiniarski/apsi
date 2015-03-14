@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 sinon = require 'sinon'
 
 server = null
@@ -10,6 +10,8 @@ isAuthenticated   = sinon.spy require '../../example/api/policies/is-authenticat
 isTrusted         = sinon.spy require '../../example/api/policies/is-trusted'
 
 describe 'Route provider', ->
+
+  @timeout 5000
 
   before ->
     mockery.enable
