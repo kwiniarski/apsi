@@ -9,7 +9,7 @@
     "url": "https://github.com/kwiniarski/spiral"
   },
   "engines": {
-    "node": ">=0.10 <0.11"
+    "node": ">=0.10"
   },
   "engineStrict": true,
   "keywords": [
