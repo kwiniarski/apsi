@@ -1,37 +1,17 @@
 'use strict'
 
-fs = require 'fs-extra'
-sinon = require 'sinon'
+support = require '../../../lib/support'
+CONFIG = require '../../fixtures/config'
 
 describe 'Support module', ->
 
-  fsStub = null
-  support = null
-
-  beforeEach ->
-    fsStub = sinon.stub fs, 'readdirSync'
-    fsStub.withArgs('dirOne').returns ['one', 'two']
-    fsStub.throws 'STUB_ERROR'
-
-    mockery.registerMock 'fs-extra', fs
-    mockery.enable
-      warnOnUnregistered: false
-      useCleanCache: true
-
-    support = require '../../../lib/support'
-
-  afterEach ->
-    fsStub.restore()
-    mockery.deregisterMock 'fs-extra'
-    mockery.disable()
-
   describe '#loadFiles helper', ->
     it 'should list files from directory', ->
-      expect(support.loadFiles('dirOne')).to.be.an 'array';
+      expect(support.loadFiles(CONFIG.MODELS_DIR)).to.be.an('array').and.have.length(7);
 
   describe '#listFiles helper', ->
     it 'should list files from directory', ->
-      expect(support.listFiles('dirOne')).to.be.an 'object';
+      expect(support.listFiles(CONFIG.MODELS_DIR)).to.be.an 'object';
 
     it 'should throw error when cannot read directory', ->
       try support.listFiles 'dirNotExists' catch error

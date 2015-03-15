@@ -6,6 +6,9 @@ models = null
 describe 'Models provider', ->
 
   before ->
+
+    @timeout 5000
+
     mockery.enable
       warnOnUnregistered: false
       useCleanCache: true
@@ -13,8 +16,7 @@ describe 'Models provider', ->
     server = require '../../../index'
     models = server.models
 
-    syncDatabase()
-      .then server.start
+    syncDatabase().then -> server.start()
 
   after ->
     mockery.disable()
