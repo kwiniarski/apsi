@@ -3,6 +3,7 @@
 var chai = require('chai');
 var utils = require('chai/lib/chai/utils');
 var mockery = require('mockery');
+var Bluebird = require('bluebird');
 
 /* jshint -W030 */
 utils.addMethod(chai.Assertion.prototype, 'readOnly', function (property) {
@@ -26,7 +27,7 @@ process.setMaxListeners(20);
 
 chai.use(require('sinon-chai'));
 chai.use(require('chai-http'));
-chai.request.addPromises(require('bluebird'));
+chai.request.addPromises(Bluebird);
 chai.config.includeStack = true;
 
 global.expect = chai.expect;
@@ -44,19 +45,33 @@ function syncDatabase() {
   var models = require('../models');
 
   return models.sequelize.sync({
-    force: true
+    force: true,
+    paranoid: true
   }).then(function () {
-    models.products.bulkCreate([
+    return models.products.bulkCreate([
       { title: 'Aliquam rutrum molestie rutrum.' },
       { title: 'Nulla laoreet.' }
     ]);
   }).then(function () {
-    models.users.bulkCreate([
+    return models.users.bulkCreate([
       { name: 'John Brown', email: 'j.brown@gmail.com' },
       { name: 'Mark Down', email: 'mark.down@yahoo.com' }
     ]);
   });
 }
 
+//mockery.enable({
+//  warnOnUnregistered: false
+//});
+//syncDatabase().then(function(){
+//    console.log('Database synchronized');
+//    mockery.disable();
+//  })
+//  .catch(console.error)
+//  .finally(mockery.disable);
+
 global.syncDatabase = syncDatabase;
+
+
+
 

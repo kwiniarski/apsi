@@ -14,6 +14,9 @@ describe 'Route provider', ->
   @timeout 5000
 
   before ->
+
+    @timeout 5000
+
     mockery.enable
       warnOnUnregistered: false
       useCleanCache: true
@@ -21,9 +24,8 @@ describe 'Route provider', ->
     server = require '../../../index'
 
     syncDatabase()
-      .then server.start
-      .then ->
-        agent = request server.application
+      .tap -> agent = request server.application
+      .then -> server.start()
 
   after ->
     mockery.disable()

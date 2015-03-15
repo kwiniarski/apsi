@@ -1,4 +1,5 @@
---reporter min
+--reporter spec
 --require test/bootstrap
 --compilers coffee:coffee-script/register
 --recursive
+
