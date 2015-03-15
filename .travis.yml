@@ -8,6 +8,8 @@ install:
 script: grunt travis
 before_script:
 - mysql -e "create database test_spiral;"
+after_script:
+- cat test/coverage.lcov | codeclimate
 deploy:
   provider: npm
   email: krzysiek@codilogy.com
