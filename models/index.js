@@ -18,15 +18,20 @@ var support = require('./../lib/support')
 
 
 function isModel(file) {
-  return (file.indexOf('.') !== 0) && (file !== 'index.js');
+  return (file.indexOf('.') !== 0) && (file !== 'index.js') && (/\.js/i.test(file));
 }
 
 function importModel(file) {
-  /* jshint -W024 */
-  var model = sequelize.import(path.resolve(CONFIG.MODELS_DIR, file));
-  /* jshint +W024 */
-  db[model.name] = model;
-  eventsLog.debug('model registered', model.name);
+  try {
+    /* jshint -W024 */
+    var model = sequelize.import(path.resolve(CONFIG.MODELS_DIR, file));
+    /* jshint +W024 */
+    db[model.name] = model;
+    eventsLog.debug('model registered', model.name);
+  }
+  catch (error) {
+    eventsLog.error('Cannot load model', file);
+  }
 }
 
 support
