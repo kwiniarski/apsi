@@ -81,6 +81,13 @@ describe 'Route provider', ->
           expect(res.body).to.be.empty
           done()
 
+  describe 'when model is nested in directories', ->
+    it 'should be mounted under same URL path as directory path', (done) ->
+        agent.get('/group/names').end (err, res) ->
+          expect(err).to.be.null
+          expect(res).to.be.json.and.have.status 200
+          done()
+
   describe 'when controller is created for the resource model', ->
 
     describe 'extend blueprint routes overwriting CRUD methods when needed', ->
