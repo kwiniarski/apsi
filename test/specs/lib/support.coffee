@@ -9,12 +9,18 @@ describe 'Support module', ->
     it 'should list files from directory', ->
       expect(support.loadFiles(CONFIG.MODELS_DIR)).to.be.an('array').and.have.length(7);
 
-  describe '#listFiles helper', ->
-    it 'should list files from directory', ->
-      expect(support.listFiles(CONFIG.MODELS_DIR)).to.be.an 'object';
+  describe '#loadModules helper', ->
+    it 'should require selected files with additional metadata', ->
+      modules = support.loadModules CONFIG.MODELS_DIR
+
+      expect(modules).to.be.an 'object'
+      expect(modules).to.contain.key 'groupNames'
+      expect(modules['groupNames']).to.have.property 'name', 'groupNames'
+      expect(modules['groupNames']).to.have.property 'path', 'group/names'
+      expect(modules['groupNames']).to.have.property 'file'
 
     it 'should throw error when cannot read directory', ->
-      try support.listFiles 'dirNotExists' catch error
+      try support.loadModules 'dirNotExists' catch error
       expect(error).to.be.not.undefined
 
   describe '#isCamelCase', ->
@@ -31,3 +37,9 @@ describe 'Support module', ->
     it 'should return string with dashes instead camel case', ->
       expect(support.dashToCamelCase('lower-camel-case')).to.eql 'lowerCamelCase'
 
+  describe '#stringToArray', ->
+    it 'should convert string to where coma sign separates elements', ->
+      expect(support.stringToArray 'a').to.eql(['a']);
+      expect(support.stringToArray 'a,b').to.eql(['a', 'b']);
+      expect(support.stringToArray 'a, b').to.eql(['a', 'b']);
+      expect(support.stringToArray 'a , b').to.eql(['a', 'b']);

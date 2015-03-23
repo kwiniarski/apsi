@@ -3,6 +3,7 @@
   "plusplus": false,
   "laxcomma": true,
   "laxbreak": true,
+  "esnext": true,
   "node": true,
   "mocha": true,
 
