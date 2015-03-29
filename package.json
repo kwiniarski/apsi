@@ -62,7 +62,7 @@
     "mocha-lcov-reporter": "0.0.2",
     "mockery": "^1.4.0",
     "mysql": "^2.5.0",
-    "sinon": "^1.12.2",
+    "sinon": "^1.14.0",
     "sinon-chai": "^2.6.0"
   }
 }
