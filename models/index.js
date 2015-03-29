@@ -6,6 +6,7 @@ var support = require('./../lib/support')
   , Sequelize = require('sequelize')
   , CONFIG = require('../config')
   , config = require(CONFIG.MODELS_CONFIG)
+  , models = support.loadModules(CONFIG.MODELS_DIR)
   , eventsLog = require('./../lib/log/events')
   , db = {}
 
@@ -28,11 +29,10 @@ function importModel(moduleData) {
     eventsLog.debug('model registered', model.name);
   }
   catch (error) {
-    eventsLog.error('Cannot load model', file);
+    eventsLog.error('Cannot load model', moduleData.file);
   }
 }
 
-var models = support.loadModules(CONFIG.MODELS_DIR);
 for (var i in models) {
   if (isModel(models[i].file)) {
     importModel(models[i]);
