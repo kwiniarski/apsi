@@ -7,7 +7,7 @@ asUser = require '../../example/api/policies/as-user'
 isAuthenticated = require '../../example/api/policies/is-authenticated'
 isTrusted = require '../../example/api/policies/is-trusted'
 
-describe 'Policies provider', ->
+describe.skip 'Policies provider', ->
 
   beforeEach ->
     mockery.enable

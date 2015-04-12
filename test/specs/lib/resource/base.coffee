@@ -7,23 +7,28 @@ ResourceAction = require '../../../../lib/resource/action'
 ResourceGenericActions = require '../../../../lib/resource/action-blueprint'
 ResourceGenericActionsStub = null
 
-modelStub = sinon.stub
-  someResource:
-    path: 'some/resource'
-  anotherResource:
-    path: 'another/resource'
-
-controllerStub = sinon.stub
-  someResource:
-    path: 'some/resource'
-    find:
-      name: 'find'
-      handler: sinon.spy()
-    controllerAction:
-      name: 'controllerAction'
-
-
 describe 'ResourceBase', ->
+
+  modelStub = null
+  controllerStub = null
+
+  beforeEach ->
+    modelStub = sinon.stub
+      someResource:
+        path: 'some/resource'
+      anotherResource:
+        path: 'another/resource'
+
+    controllerStub = sinon.stub
+      someResource:
+        path: 'some/resource'
+        find:
+          name: 'find'
+          handler: sinon.spy()
+        controllerAction:
+          name: 'controllerAction'
+          handler: sinon.spy()
+
 
   it 'should throw error when passed model and controller do not match the same path', ->
     expect -> new ResourceBase modelStub.anotherResource, controllerStub.someResource
@@ -45,7 +50,7 @@ describe 'ResourceBase', ->
     genericFindStub = sinon.stub ResourceGenericActions.prototype.find, 'handler'
 
     rm = new ResourceBase modelStub.someResource, controllerStub.someResource
-    rm.getAction('find')._handler()
+    rm.getAction('find').handler()
 
     expect(genericFindStub).to.not.have.been.called
     expect(controllerStub.someResource.find.handler).to.have.been.calledOnce
@@ -57,7 +62,7 @@ describe 'ResourceBase', ->
     rm.registerPolicy p1 = sinon.spy()
     rm.registerPolicy p2 = sinon.spy()
 
-    handle() for handle in rm._policies
+    handle() for handle in rm.policies
 
     expect(p1).to.be.calledOnce.and.to.be.calledBefore(p2)
     expect(p2).to.be.calledOnce
@@ -66,8 +71,8 @@ describe 'ResourceBase', ->
     rm = new ResourceBase null, controllerStub.someResource
     rm.registerPolicy p1 = sinon.spy(), ['find']
 
-    expect(rm._policies).to.be.empty
-    expect(rm.getAction('find')._policies).to.have.length(1)
+    expect(rm.policies).to.be.empty
+    expect(rm.getAction('find').policies).to.have.length(1)
 
   it 'should not mix actions from different resources', ->
     genericFindStub = sinon.stub ResourceGenericActions.prototype.find, 'handler'
@@ -75,7 +80,7 @@ describe 'ResourceBase', ->
     rm1 = new ResourceBase modelStub.someResource
     rm2 = new ResourceBase modelStub.someResource
 
-    rm1.getAction('find')._handler()
+    rm1.getAction('find').handler()
 
     expect(genericFindStub).to.have.been.calledOnce
 

@@ -2,7 +2,7 @@
 
 controllers = null
 
-describe 'Controllers provider', ->
+describe.skip 'Controllers provider', ->
 
   beforeEach ->
     mockery.enable

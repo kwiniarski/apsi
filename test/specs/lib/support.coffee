@@ -37,3 +37,9 @@ describe 'Support module', ->
     it 'should return string with dashes instead camel case', ->
       expect(support.dashToCamelCase('lower-camel-case')).to.eql 'lowerCamelCase'
 
+  describe '#stringToArray', ->
+    it 'should convert string to where coma sign separates elements', ->
+      expect(support.stringToArray 'a').to.eql(['a']);
+      expect(support.stringToArray 'a,b').to.eql(['a', 'b']);
+      expect(support.stringToArray 'a, b').to.eql(['a', 'b']);
+      expect(support.stringToArray 'a , b').to.eql(['a', 'b']);

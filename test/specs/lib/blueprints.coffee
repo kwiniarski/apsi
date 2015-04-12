@@ -3,7 +3,7 @@
 sinon = require 'sinon'
 blueprints = require '../../../lib/blueprints'
 
-describe 'Blueprints provider', ->
+describe.skip 'Blueprints provider', ->
 
   blueprint = null
   model = null
