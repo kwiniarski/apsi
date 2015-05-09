@@ -2,12 +2,12 @@
 
 sinon = require 'sinon'
 #express = require 'express'
-ResourceBase = require '../../../../lib/resource/base'
+ResourceBase = require '../../../../lib/resource/index'
 ResourceAction = require '../../../../lib/resource/action'
 ResourceGenericActions = require '../../../../lib/resource/action-blueprint'
 ResourceGenericActionsStub = null
 
-describe 'ResourceBase', ->
+describe 'Resource', ->
 
   modelStub = null
   controllerStub = null
