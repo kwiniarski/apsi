@@ -82,7 +82,7 @@ describe.skip 'Route provider', ->
           done()
 
   describe 'when model is nested in directories', ->
-    it.skip 'should be mounted under same URL path as directory path', (done) ->
+    it 'should be mounted under same URL path as directory path', (done) ->
         agent.get('/group/names').end (err, res) ->
           expect(err).to.be.null
           expect(res).to.be.json.and.have.status 200

@@ -17,10 +17,12 @@ describe 'ResourceAction', ->
 
     config =
       name: 'actionName',
-      handler: sinon.spy()
+      handler: ResourceAction.wrapAction(sinon.spy())
       policies: [sinon.spy()]
       methods: ['GET', 'PUT']
       mountPath: '/action'
+
+
 
     ra = new ResourceAction config
     ra.setupRouter router
@@ -32,7 +34,7 @@ describe 'ResourceAction', ->
 
     config =
       name: 'actionName',
-      handler: sinon.spy()
+      handler: ResourceAction.wrapAction(sinon.spy())
 
     ra = new ResourceAction config
     ra.setupRouter router
@@ -43,7 +45,7 @@ describe 'ResourceAction', ->
 
     config =
       name: 'actionName',
-      handler: sinon.spy()
+      handler: ResourceAction.wrapAction(sinon.spy())
 
     ra = new ResourceAction config
     ra.setupRouter router
@@ -54,7 +56,7 @@ describe 'ResourceAction', ->
 
     config =
       name: 'actionName',
-      handler: sinon.spy()
+      handler: ResourceAction.wrapAction(sinon.spy())
 
     ra = new ResourceAction config
     ra.setupRouter router
