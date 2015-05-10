@@ -30,15 +30,9 @@ registerResourceComponent('model', models);
 registerResourceComponent('controller', controllers);
 
 for (var i in resources) {
-  resources[i] = new Resource(resources[i].model, resources[i].controller);
+
+  resources[i] = new Resource(resources[i].model, resources[i].controller, policies);
   router.use(resources[i].getRouter());
 }
-
-
-//console.log(Resource);
-//console.log(policies);
-//console.log(controllers);
-//console.log(resources);
-
 
 module.exports = router;
