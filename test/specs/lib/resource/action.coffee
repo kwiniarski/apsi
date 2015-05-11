@@ -2,6 +2,7 @@
 
 sinon = require 'sinon'
 ResourceAction = require '../../../../lib/resource/action'
+actionWrapper = require '../../../../lib/resource/action-wrapper'
 
 describe 'ResourceAction', ->
 
@@ -15,50 +16,46 @@ describe 'ResourceAction', ->
 
   it 'should apply handler and policies with the configured methods to the provided router object', ->
 
-    config =
-      name: 'actionName',
-      handler: ResourceAction.wrapAction(sinon.spy())
-      policies: [sinon.spy()]
-      methods: ['GET', 'PUT']
-      mountPath: '/action'
+    config = actionWrapper sinon.spy()
+    config.id = 'actionName'
+    config.policies = [sinon.spy()]
+    config.methods = ['GET', 'PUT']
+    config.mountPath = '/action'
 
 
 
     ra = new ResourceAction config
     ra.setupRouter router
 
-    expect(router.get).to.have.been.calledWith '/action', config.policies, config.handler
-    expect(router.put).to.have.been.calledWith '/action', config.policies, config.handler
+    expect(router.get).to.have.been.calledWith '/action', config.policies, config
+    expect(router.put).to.have.been.calledWith '/action', config.policies, config
 
   it 'should default config.mountPath to "/" if not present', ->
 
-    config =
-      name: 'actionName',
-      handler: ResourceAction.wrapAction(sinon.spy())
+    config = actionWrapper sinon.spy()
+    config.id = 'actionName'
 
     ra = new ResourceAction config
     ra.setupRouter router
 
-    expect(router.get).to.have.been.calledWith '/', [], config.handler
+    expect(router.get).to.have.been.calledWith '/', [], config
 
   it 'should default config.methods to GET if not present', ->
 
-    config =
-      name: 'actionName',
-      handler: ResourceAction.wrapAction(sinon.spy())
+    config = actionWrapper sinon.spy()
+    config.id = 'actionName'
 
     ra = new ResourceAction config
     ra.setupRouter router
 
-    expect(router.get).to.have.been.calledWith '/', [], config.handler
+    expect(router.get).to.have.been.calledWith '/', [], config
 
   it 'should default config.policies to an empty collection if not present', ->
 
-    config =
-      name: 'actionName',
-      handler: ResourceAction.wrapAction(sinon.spy())
+    config = actionWrapper sinon.spy()
+    config.id = 'actionName'
 
     ra = new ResourceAction config
     ra.setupRouter router
 
-    expect(router.get).to.have.been.calledWith '/', [], config.handler
+    expect(router.get).to.have.been.calledWith '/', [], config

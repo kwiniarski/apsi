@@ -147,6 +147,7 @@ describe 'PolicyManager', ->
 
   it 'should return configured allow function if resource was configured with allow flag', ->
     expect(pm.get 'a-resource').to.deep.equal([ allowPolicy ])
+    expect(pm.get 'a-resource', 'z-action').to.deep.equal([ allowPolicy ])
 
   it 'should return configured block function if resource was configured with block flag', ->
     expect(pm.get 'b-resource').to.deep.equal([ blockPolicy ])

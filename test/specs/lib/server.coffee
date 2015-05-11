@@ -27,7 +27,7 @@ describe 'Server core', ->
   it 'should expose application object when required', ->
     expect(server).to.have.property 'application'
 
-  it 'should start application on selected port', ->
+  it.skip 'should start application on selected port', ->
     server.hooks.afterStart = sinon.spy server.hooks.afterStart
     server.hooks.afterStop = sinon.spy server.hooks.afterStop
     server

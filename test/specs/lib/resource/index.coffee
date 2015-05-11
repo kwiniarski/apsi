@@ -5,7 +5,8 @@ sinon = require 'sinon'
 Resource = require '../../../../lib/resource/index'
 ResourceAction = require '../../../../lib/resource/action'
 ResourceGenericActions = require '../../../../lib/resource/action-blueprint'
-ResourceGenericActionsStub = null
+#ResourceGenericActionsStub = null
+actionWrapper = require '../../../../lib/resource/action-wrapper'
 
 describe 'Resource', ->
 
@@ -25,17 +26,19 @@ describe 'Resource', ->
       anotherResource:
         path: 'another/resource'
 
+    findAction = actionWrapper sinon.spy()
+    findAction.id = 'find'
+
+    controllerAction = actionWrapper sinon.spy()
+    controllerAction.id = 'controllerAction'
+
     controllerStub = sinon.stub
       someResource:
         name: 'someResource'
         path: 'some/resource'
         actions:
-          find:
-            name: 'find'
-            handler: sinon.spy()
-          controllerAction:
-            name: 'controllerAction'
-            handler: sinon.spy()
+          find: findAction
+          controllerAction: controllerAction
 
 
   it 'should throw error when passed model and controller do not match the same path', ->
@@ -55,15 +58,8 @@ describe 'Resource', ->
     expect(rm.getAction 'find').to.be.instanceof(ResourceAction)
 
   it 'should return controller actions before model actions if both are defined', ->
-    genericFindStub = sinon.stub ResourceGenericActions.prototype.find, 'handler'
-
     rm = new Resource modelStub.someResource, controllerStub.someResource
-    rm.getAction('find').handler()
-
-    expect(genericFindStub).to.not.have.been.called
-    expect(controllerStub.someResource.actions.find.handler).to.have.been.calledOnce
-
-    genericFindStub.restore()
+    expect(rm.getAction('find').handler).to.equal(controllerStub.someResource.actions.find)
 
   it 'should call policies in FIFO order', ->
     policies = sinon.stub
@@ -92,16 +88,3 @@ describe 'Resource', ->
 
     expect(rm.policies).to.be.empty
     expect(rm.getAction('find').policies).to.have.length(1)
-
-  it 'should not mix actions from different resources', ->
-    genericFindStub = sinon.stub ResourceGenericActions.prototype.find, 'handler'
-
-    rm1 = new Resource modelStub.someResource
-    rm2 = new Resource modelStub.someResource
-
-    rm1.getAction('find').handler()
-
-    expect(genericFindStub).to.have.been.calledOnce
-
-    genericFindStub.restore()
-
