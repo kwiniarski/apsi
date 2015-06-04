@@ -4,7 +4,7 @@ sinon = require 'sinon'
 ResourceAction = require '../../../../lib/resource/action'
 actionWrapper = require '../../../../lib/resource/action-wrapper'
 
-describe 'ResourceAction', ->
+describe.skip 'ResourceAction', ->
 
   router =
     get: sinon.spy()

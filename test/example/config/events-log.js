@@ -11,7 +11,7 @@ var devNull = require('dev-null');
 module.exports = {
   transports: {
     Console: {
-      silent: false
+      silent: true
     },
     File: {
       silent: true,
