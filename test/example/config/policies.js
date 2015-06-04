@@ -14,6 +14,6 @@ module.exports = {
   users: {
     '*': ['is-authenticated', 'asAdmin']
   },
-  restricted: false,
-  allowed: true
+  restricted: { '*': false },
+  allowed: { '*': true }
 };

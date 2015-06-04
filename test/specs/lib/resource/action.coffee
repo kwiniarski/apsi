@@ -30,7 +30,7 @@ describe 'ResourceAction', ->
     expect(router.get).to.have.been.calledWith '/action', config.policies, config
     expect(router.put).to.have.been.calledWith '/action', config.policies, config
 
-  it 'should default config.mountPath to "/" if not present', ->
+  it 'should default config.mountPath to action.id translated to lowercase dash ("/action-name")', ->
 
     config = actionWrapper sinon.spy()
     config.id = 'actionName'
@@ -38,7 +38,7 @@ describe 'ResourceAction', ->
     ra = new ResourceAction config
     ra.setupRouter router
 
-    expect(router.get).to.have.been.calledWith '/', [], config
+    expect(router.get).to.have.been.calledWith '/action-name', [], config
 
   it 'should default config.methods to GET if not present', ->
 
@@ -48,7 +48,7 @@ describe 'ResourceAction', ->
     ra = new ResourceAction config
     ra.setupRouter router
 
-    expect(router.get).to.have.been.calledWith '/', [], config
+    expect(router.get).to.have.been.calledWith '/action-name', [], config
 
   it 'should default config.policies to an empty collection if not present', ->
 
@@ -58,4 +58,4 @@ describe 'ResourceAction', ->
     ra = new ResourceAction config
     ra.setupRouter router
 
-    expect(router.get).to.have.been.calledWith '/', [], config
+    expect(router.get).to.have.been.calledWith '/action-name', [], config

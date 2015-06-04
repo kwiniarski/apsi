@@ -9,11 +9,11 @@
 module.exports = {
   users: {
     find: {
-      route: /^\/([\w\.]+@[\w\.]+)$/i
+      mountPath: /^\/([\w\.]+@[\w\.]+)$/i
     },
     addAvatarImage: {
       methods: ['POST'],
-      route: '/add-image'
+      mountPath: '/add-image'
     }
   }
 };

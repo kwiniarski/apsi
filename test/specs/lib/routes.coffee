@@ -9,7 +9,7 @@ asUser            = sinon.spy require '../../example/api/policies/as-user'
 isAuthenticated   = sinon.spy require '../../example/api/policies/is-authenticated'
 isTrusted         = sinon.spy require '../../example/api/policies/is-trusted'
 
-describe.skip 'Route provider', ->
+describe 'Route provider', ->
 
   @timeout 5000
 
