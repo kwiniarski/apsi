@@ -27,13 +27,12 @@ describe 'Models provider', ->
     expect(models).to.have.property 'users'
 
   it 'should return formated output from find(All) methods', (done) ->
-    models.users.find(1)
+    models.users.findById(1)
     .then (res) ->
       expect(res).to.have.property 'name', 'John Brown'
       expect(res).to.have.property 'email', 'j.brown@gmail.com'
       return res
-    .done (err, res) ->
-      expect(err).to.be.null
+    .then (res) ->
       expect(res).to.have.property 'id', 1
       expect(res).to.have.property 'avatar', null
       done()
