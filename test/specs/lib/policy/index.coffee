@@ -73,7 +73,7 @@ describe 'PolicyRegistry', ->
     it 'should throw error when requested policy is not found', ->
       expect(-> pm.get 'unknown').to.throw(ReferenceError)
 
-    it.skip 'should return an error when trying to get not configured block/allow middleware', ->
+    it 'should return an error when trying to get not configured block/allow middleware', ->
       pm = new PolicyRegistry dir: base
       expect(-> pm.get true).to.throw(Error)
       expect(-> pm.get false).to.throw(Error)
@@ -202,7 +202,7 @@ describe 'PolicyConfig', ->
   it 'should convert strings to arrays if they contain coma sign', ->
     expect(pc.c).to.be.deep.equal(['aPolicy', 'bPolicy'])
 
-  it.skip 'should flatten values which may be arrays', ->
+  it 'should flatten values which may be arrays', ->
     expect(pc.d).to.be.deep.equal(['aPolicy', 'bPolicy', 'cPolicy'])
 
   it 'should throw an error when block/allow policy is used together with custom policies', ->

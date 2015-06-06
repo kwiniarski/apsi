@@ -4,58 +4,29 @@ sinon = require 'sinon'
 ResourceAction = require '../../../../lib/resource/action'
 actionWrapper = require '../../../../lib/resource/action-wrapper'
 
-describe.skip 'ResourceAction', ->
-
-  router =
-    get: sinon.spy()
-    put: sinon.spy()
+describe 'ResourceAction', ->
 
   beforeEach ->
-    router.get.reset()
-    router.put.reset()
+    @handler = sinon.spy()
+    @handler.id = 'actionName'
+    @action = new ResourceAction @handler
 
-  it 'should apply handler and policies with the configured methods to the provided router object', ->
+  it 'should throw error when handler is not a function', ->
+    expect(-> new ResourceAction).to.throw
 
-    config = actionWrapper sinon.spy()
-    config.id = 'actionName'
-    config.policies = [sinon.spy()]
-    config.methods = ['GET', 'PUT']
-    config.mountPath = '/action'
+  it 'should throw error when handler has no id', ->
+    handler = sinon.spy()
+    expect(-> new ResourceAction handler).to.throw
 
+  it 'should set mountPath using id, when mountPath is not given', ->
+    expect(@action.mountPath).to.equal '/action-name'
 
+  it 'should have default value for policies', ->
+    expect(@action.policies).to.eql []
 
-    ra = new ResourceAction config
-    ra.setupRouter router
+  it 'should have default value for methods', ->
+    expect(@action.methods).to.eql ['GET']
 
-    expect(router.get).to.have.been.calledWith '/action', config.policies, config
-    expect(router.put).to.have.been.calledWith '/action', config.policies, config
-
-  it 'should default config.mountPath to action.id translated to lowercase dash ("/action-name")', ->
-
-    config = actionWrapper sinon.spy()
-    config.id = 'actionName'
-
-    ra = new ResourceAction config
-    ra.setupRouter router
-
-    expect(router.get).to.have.been.calledWith '/action-name', [], config
-
-  it 'should default config.methods to GET if not present', ->
-
-    config = actionWrapper sinon.spy()
-    config.id = 'actionName'
-
-    ra = new ResourceAction config
-    ra.setupRouter router
-
-    expect(router.get).to.have.been.calledWith '/action-name', [], config
-
-  it 'should default config.policies to an empty collection if not present', ->
-
-    config = actionWrapper sinon.spy()
-    config.id = 'actionName'
-
-    ra = new ResourceAction config
-    ra.setupRouter router
-
-    expect(router.get).to.have.been.calledWith '/action-name', [], config
+  it 'should provide method to add more policies', ->
+    @action.registerPolicies(sinon.spy());
+    expect(@action.policies).to.have.length 1
