@@ -9,8 +9,8 @@
 var path = require('path')
   , support = require('./../lib/support')
   , CONFIG = require('../config')
-  , config = support.listFiles(CONFIG.SERVICES_CONFIG_DIR)
-  , registry = support.listFiles(CONFIG.SERVICES_DIR)
+  , config = support.loadModules(CONFIG.SERVICES_CONFIG_DIR)
+  , registry = support.loadModules(CONFIG.SERVICES_DIR)
   , services = Object.keys(registry)
   , serviceName
   , serviceConfig
@@ -30,12 +30,12 @@ for (var i = 0, j = services.length; i < j; i++) {
   serviceConfig = config[serviceName];
 
   if (serviceConfig) {
-    serviceConfig = require(serviceConfig);
+    serviceConfig = require(serviceConfig.file);
   } else {
     serviceConfig = null;
   }
 
-  Service = require(registry[serviceName]);
+  Service = require(registry[serviceName].file);
 
   defineReadOnlyProperty(serviceName, new Service(serviceConfig));
 }

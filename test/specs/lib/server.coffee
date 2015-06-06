@@ -21,9 +21,6 @@ describe 'Server core', ->
   it 'should expose models when required', ->
     expect(server).to.have.property 'models'
 
-  it 'should expose routes when required', ->
-    expect(server).to.have.property 'routes'
-
   it 'should expose events log when required', ->
     expect(server).to.have.property 'log'
 

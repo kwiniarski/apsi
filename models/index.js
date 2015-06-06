@@ -2,14 +2,15 @@
 
 var support = require('./../lib/support')
   , path = require('path')
-  , lodash = require('lodash')
+  , _ = require('lodash')
   , Sequelize = require('sequelize')
   , CONFIG = require('../config')
   , config = require(CONFIG.MODELS_CONFIG)
+  , models = support.loadModules(CONFIG.MODELS_DIR)
   , eventsLog = require('./../lib/log/events')
   , db = {}
 
-  , options = lodash.extend({
+  , options = _.extend({
       logging: eventsLog.debug
     }, config.options || {})
 
@@ -18,26 +19,25 @@ var support = require('./../lib/support')
 
 
 function isModel(file) {
-  return (file.indexOf('.') !== 0) && (file !== 'index.js') && (/\.js/i.test(file));
+  return (file.indexOf('.') !== 0) && (!/index\.js$/.test(file)) && (/\.js/i.test(file));
 }
 
-function importModel(file) {
+function importModel(moduleData) {
   try {
-    /* jshint -W024 */
-    var model = sequelize.import(path.resolve(CONFIG.MODELS_DIR, file));
-    /* jshint +W024 */
-    db[model.name] = model;
+    var model = require(moduleData.file)(sequelize, Sequelize);
+    db[model.name] = _.defaults(model, moduleData);
     eventsLog.debug('model registered', model.name);
   }
   catch (error) {
-    eventsLog.error('Cannot load model', file);
+    eventsLog.error('Cannot load model', moduleData.file);
   }
 }
 
-support
-  .loadFiles(CONFIG.MODELS_DIR)
-  .filter(isModel)
-  .forEach(importModel);
+for (var i in models) {
+  if (isModel(models[i].file)) {
+    importModel(models[i]);
+  }
+}
 
 for (var modelName in db) {
   if ('associate' in db[modelName]) {
@@ -55,5 +55,5 @@ Object.defineProperties(module.exports, {
   }
 });
 
-module.exports = lodash.extend(module.exports, db);
+module.exports = _.extend(module.exports, db);
 

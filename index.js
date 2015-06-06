@@ -17,7 +17,7 @@ var httpPromise = require('http-promise')
 
 application.use(middleware);
 
-server.routes = require('./lib/routes');
+//server.routes = require('./lib/routes');
 server.services = require('./services');
 server.models = require('./models');
 server.application = application;
