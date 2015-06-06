@@ -1,6 +1,6 @@
 {
   "name": "spiral",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Simple RESTful API framework for Node.js build on the top of Express",
   "license": "MIT",
   "author": "Krzysztof Winiarski <krzysiek@codilogy.com>",
