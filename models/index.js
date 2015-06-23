@@ -29,7 +29,7 @@ function importModel(moduleData) {
     eventsLog.debug('model registered', model.name);
   }
   catch (error) {
-    eventsLog.error('Cannot load model', moduleData.file);
+    eventsLog.error('Cannot load model', moduleData.file, error.stack);
   }
 }
 
