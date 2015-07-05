@@ -1,6 +1,5 @@
 {
   "disallowKeywords": ["with"],
-  "disallowKeywordsOnNewLine": ["else"],
   "disallowMixedSpacesAndTabs": true,
   "disallowMultipleVarDecl": "exceptUndefined",
   "disallowNewlineBeforeBlockStatements": true,
@@ -13,6 +12,7 @@
   "requireCamelCaseOrUpperCaseIdentifiers": true,
   "requireCapitalizedConstructors": true,
   "requireCurlyBraces": true,
+  "requireKeywordsOnNewLine": ["else", "catch"],
   "requireSpaceAfterKeywords": [
     "if",
     "else",

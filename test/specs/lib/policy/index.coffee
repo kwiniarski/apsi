@@ -160,6 +160,7 @@ describe 'PolicyManager', ->
     expect(pm.get 'z-resource').to.deep.equal([ aPolicy ])
     expect(pm.get 'z-resource', 'z-action').to.deep.equal([ aPolicy ])
 
+
 describe 'PolicyConfig', ->
 
   pc = null
