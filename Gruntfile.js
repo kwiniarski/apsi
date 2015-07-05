@@ -98,11 +98,11 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-blanket');
   grunt.loadNpmTasks('grunt-mocha-test');
-  grunt.loadNpmTasks('grunt-codeclimate');
+  grunt.loadNpmTasks('grunt-codeclimate-reporter');
 
   grunt.registerTask('build', ['clean', 'copy:library', 'blanket', 'copy:testFiles']);
   grunt.registerTask('test', ['build', 'mochaTest:test', 'clean']);
   grunt.registerTask('coverage', ['build', 'mochaTest:coverageHtml']);
-  grunt.registerTask('travis', ['build', 'mochaTest:coverageLcov', 'clean']);
+  grunt.registerTask('travis', ['build', 'mochaTest:coverageLcov', 'codeclimate', 'clean']);
 };
 
