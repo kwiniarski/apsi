@@ -4,13 +4,14 @@
 # ignore editor configuration data
 nbproject
 .brackets.json
-.idea
+.idea/
 
 # ignore installed dependencies
-node_modules
+node_modules/
+test/example/
 
 # temporary data
-.grunt
+.grunt/
 npm-debug.log
 Gruntfile.json
 codeclimate.txt
