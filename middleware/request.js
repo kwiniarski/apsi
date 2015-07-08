@@ -6,7 +6,10 @@
 
 'use strict';
 
+var uuid = require('node-uuid');
+
 module.exports = function (req, res, next) {
+  req._uuid = uuid.v1();
   req._startedAt = process.hrtime();
   next();
 };

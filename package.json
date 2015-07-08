@@ -40,6 +40,7 @@
     "fs-extra": "~0.21.0",
     "lodash": "~3.10.0",
     "morgan": "~1.6.0",
+    "node-uuid": "^1.4.3",
     "rc": "~1.0.0",
     "sequelize": "~3.3.0",
     "winston": "~1.0.0"

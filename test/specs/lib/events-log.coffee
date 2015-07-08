@@ -10,6 +10,11 @@ fakes = {}
 log = null
 
 setupHelper = (eventsLogFixture = '../../example/config/events-log') ->
+  # TODO Clean up mockery usage
+  # mockery has to be disabled because in policy/index suite
+  # it is enabled on the file level (instead of suite), but doing this
+  # will brake tests.
+  mockery.disable()
   mockery.registerSubstitute logConfig, path.resolve(__dirname, eventsLogFixture)
   mockery.enable
     warnOnUnregistered: false

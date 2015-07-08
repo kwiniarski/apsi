@@ -11,6 +11,11 @@
 # pr.get PolicyRegistry.BLOCK_MIDDLEWARE
 # pr.get PolicyRegistry.ALLOW_MIDDLEWARE
 
+
+mockery.enable
+  warnOnUnregistered: false
+  useCleanCache: true
+
 sinon = require 'sinon'
 support = require '../../../../lib/support'
 PolicyRegistry = require '../../../../lib/policy/registry'

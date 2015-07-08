@@ -14,7 +14,7 @@ var options = _.extend({
 }, config.options || {});
 var conn = config.connection;
 var sequelize = new Sequelize(conn.database, conn.user, conn.password, options);
-var debug = require('debug')('spiral:model');
+var debug = require('../lib/log/debug')('spiral:model');
 
 function isModel(file) {
   return (file.indexOf('.') !== 0)
