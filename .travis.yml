@@ -4,7 +4,7 @@ node_js:
 - '0.10'
 install:
 - npm install
-- npm install -g grunt-cli coffee-script
+- npm install -g grunt-cli
 script: grunt travis
 before_script:
 - mysql -e "create database test_spiral;"
