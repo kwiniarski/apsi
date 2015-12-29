@@ -12,6 +12,7 @@ test/example/
 
 # temporary data
 .grunt/
+.vagrant/
 npm-debug.log
 Gruntfile.json
 codeclimate.txt

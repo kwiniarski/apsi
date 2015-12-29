@@ -1,5 +1,7 @@
+.vagrant
 docs
 node_modules
+vagrant
 test
 .editorconfig
 .gitignore
@@ -10,3 +12,4 @@ test
 codeclimate.txt
 Gruntfile.js
 README.md
+Vagrantfile

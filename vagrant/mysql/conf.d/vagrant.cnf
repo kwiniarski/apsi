@@ -1,0 +1,12 @@
+[mysqld]
+bind-address = 0.0.0.0
+port = 3306
+
+performance_schema = off
+
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow.log
+log_error = /var/log/mysql/error.log
+
+[mysqld_safe]
+syslog
