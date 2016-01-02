@@ -2,7 +2,6 @@
 
 CODECLIMATE_FILE=codeclimate.txt
 CODECLIMATE_BIN=node_modules/codeclimate-test-reporter/bin/codeclimate.js
-NODEJS_BIN=/usr/bin/node
 COVERAGE_FILE=.coverage/lcov.info
 
 if [[ -z "$CODECLIMATE_REPO_TOKEN" ]]; then
@@ -14,6 +13,6 @@ if [[ -z "$CODECLIMATE_REPO_TOKEN" ]]; then
   fi
 fi
 
-bash -c "CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN $NODEJS_BIN $CODECLIMATE_BIN < $COVERAGE_FILE";
+bash -c "CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN node $CODECLIMATE_BIN < $COVERAGE_FILE";
 exit 0;
 
