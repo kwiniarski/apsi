@@ -18,7 +18,10 @@
     "express"
   ],
   "scripts": {
-    "test": "node node_modules/mocha/bin/mocha test/specs"
+    "test": "mocha test/specs",
+    "hint": "jshint --reporter node_modules/jshint-stylish .",
+    "cover": "istanbul cover _mocha -- test/specs",
+    "codeclimate": "scripts/codeclimate.sh"
   },
   "main": "index",
   "files": [
@@ -46,21 +49,15 @@
     "winston": "^2.1.1"
   },
   "devDependencies": {
-    "blanket": "^1.1.0",
     "chai": "^3.0.0",
     "chai-http": "^1.0.0",
+    "codeclimate-test-reporter": "^0.1.1",
     "dev-null": "^0.1.1",
-    "grunt": "^0.4.0",
-    "grunt-blanket": "^0.0.8",
-    "grunt-codeclimate-reporter": "^1.2.0",
-    "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-copy": "^0.7.0",
-    "grunt-contrib-jshint": "^0.11.0",
-    "grunt-mocha-test": "^0.12.4",
     "http-promise": "^0.1.4",
+    "istanbul": "^0.4.1",
+    "jshint": "^2.9.1-rc2",
     "jshint-stylish": "^2.0.0",
     "mocha": "^2.1.0",
-    "mocha-lcov-reporter": "^0.0.2",
     "mockery": "^1.4.0",
     "mysql": "^2.5.0",
     "sinon": "^1.14.0",
