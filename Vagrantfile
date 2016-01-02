@@ -29,6 +29,7 @@ Vagrant.configure(2) do |config|
     vb.cpus = 1
     vb.memory = 1536
     vb.customize ["modifyvm", :id, "--pae", "on"]
+    vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
   end
 
   config.vm.provision "shell" do |sh|
